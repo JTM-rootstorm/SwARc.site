@@ -25,10 +25,15 @@ as the module matures. Nothing draws there yet.
 
 - Plays from the menu through a new game and the intro cutscene into
   gameplay, with a controller or keyboard and mouse.
-- Fixes to the emulated GPU found here: an NVIDIA device loss from a
-  shader translation bug (case fallthrough), and depth bias applied in
-  exact units (`VK_EXT_depth_bias_control`) for flicker-free blood pools
-  and decals, offered upstream to Xenia Canary.
+- Fixes to the emulated GPU found here:
+  - an NVIDIA device loss and random black spikes on skinned characters,
+    both from a shader translation bug (case fallthrough);
+  - the red tint and wrong lighting on the default render target path,
+    from a gamma conversion done in the wrong direction and the host's
+    2x MSAA sample positions mirroring the console's;
+  - depth bias applied in exact units (`VK_EXT_depth_bias_control`) for
+    flicker-free blood pools and decals, merged into Xenia Canary
+    ([#1289](https://github.com/xenia-canary/xenia-canary/pull/1289)).
 - A **native renderer** has begun, replacing the emulated GPU at the
   game's own Direct3D level: the game's shaders translated ahead of
   time from its packages, its textures with every mip level, and its
@@ -36,10 +41,8 @@ as the module matures. Nothing draws there yet.
 
 ## Known issues
 
-- With the default render target path, a red tint and wrong lighting;
-  the exact EDRAM path fixes them but brings blocky shadows.
 - Stray black polygons from the game's MSAA predicated tiling, worked
-  around with a patch.
+  around with a patch that is on by default.
 
 ## Next
 
