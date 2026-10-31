@@ -39,6 +39,10 @@ defaults:
       path: _projects/ps4
     values:
       system: ps4
+  - scope:
+      path: _projects/x360
+    values:
+      system: x360
 
 exclude:
   - README.md

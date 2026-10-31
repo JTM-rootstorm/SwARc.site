@@ -123,3 +123,27 @@
 }
 .theme-gravityrush h2 { border-top: 1px solid var(--rule); color: #e6d3a3; }
 .theme-gravityrush .facts { backdrop-filter: blur(4px); border-color: rgb(240 194 94 / 0.25); }
+
+/* Gears of War: gunmetal, ash and the Crimson Omen's red. */
+.theme-gears {
+  --scheme: dark;
+  --bg: #121314; --fg: #d6d4d0; --muted: #8e8b86; --rule: #2e2f31;
+  --panel: #1b1c1e; --link: #d23a2a; --code-bg: #232427;
+  --playable: #7fb069; --ingame: #e0503c; --boots: #d9a441; --early: #8e8b86;
+  --head-bg: #0a0a0b; --head-fg: #c9c6c0; --head-rule: 2px solid #8c1c13;
+  --display: "Teko", "Arial Narrow", sans-serif;
+  font-family: "Barlow", system-ui, sans-serif; font-size: 17px;
+  background: radial-gradient(ellipse at top, #1d1e20 0%, #121314 60%) fixed;
+}
+.theme-gears h1 {
+  text-transform: uppercase; font-size: 3.2rem; font-weight: 600; line-height: 1;
+  letter-spacing: 0.04em; color: #e8e4dc; text-shadow: 0 2px 0 #000, 0 0 22px rgb(140 28 19 / 0.45);
+}
+.theme-gears h2 {
+  text-transform: uppercase; font-size: 1.9rem; font-weight: 500; letter-spacing: 0.05em;
+  border-top: none; border-left: 4px solid #8c1c13; padding-left: 0.6rem;
+}
+.theme-gears .facts {
+  background: linear-gradient(180deg, #202124, #17181a); border: 1px solid #34353a;
+  border-top: 3px solid #8c1c13; border-radius: 2px;
+}
