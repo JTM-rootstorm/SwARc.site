@@ -2,6 +2,7 @@
 title: PlayStation 4
 full: PlayStation 4
 order: 2
+accent: "#7048e8"
 cpu: x86-64 (AMD Jaguar, family 16h)
 base: x86recomp Orbis platform module
 branch: ps4

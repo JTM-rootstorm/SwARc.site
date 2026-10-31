@@ -6,7 +6,8 @@ no Actions).
 
 - `index.md`: the landing page; its systems and port list are generated.
 - `_systems/<system>.md`: one page per system (PC, PS4, Switch, Xbox 360). `order`
-  sets its position in the Systems menu.
+  sets its position in the Systems menu, `accent` its colour on the
+  landing page.
 - `_projects/<system>/<port>.md`: one page per port, served at
   `/<system>/<port>/`. The front matter holds the status shown on the
   landing page (`stage` is one of `playable`, `ingame`, `boots`, `early`

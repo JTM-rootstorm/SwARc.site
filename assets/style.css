@@ -10,6 +10,7 @@
   --ingame: #1f5fbf;
   --boots: #9a6100;
   --early: #6b6f75;
+  --hero: linear-gradient(120deg, #1c7ed6 0%, #7048e8 55%, #c2255c 100%);
   color-scheme: light;
 }
 
@@ -26,6 +27,7 @@
     --ingame: #79a8f2;
     --boots: #e0a540;
     --early: #a0a5ab;
+    --hero: linear-gradient(120deg, #15559a 0%, #4c2fa8 55%, #8c1a44 100%);
     color-scheme: dark;
   }
 }
@@ -53,7 +55,7 @@ a:hover { text-decoration: underline; }
 nav { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.25rem 1.25rem; font-size: 0.95rem; }
 nav a { color: var(--muted); }
 
-main { padding-top: 1.5rem; padding-bottom: 2rem; }
+main.wrap { padding-top: 1.5rem; padding-bottom: 2rem; }
 
 h1 { font-size: 2rem; line-height: 1.2; margin: 0.25rem 0 0.5rem; }
 h2 { font-size: 1.3rem; margin: 2rem 0 0.5rem; padding-top: 0.5rem; border-top: 1px solid var(--rule); }
@@ -76,6 +78,7 @@ th { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
   font-size: 0.8rem; font-weight: 600; line-height: 1;
   padding: 0.3em 0.6em; border-radius: 999px;
   border: 1px solid currentColor;
+  background: color-mix(in srgb, currentColor 12%, transparent);
 }
 .badge-playable { color: var(--playable); }
 .badge-ingame { color: var(--ingame); }
@@ -125,10 +128,78 @@ th { color: var(--muted); font-weight: 600; font-size: 0.85rem; }
 
 .badge-system { color: var(--muted); }
 .card p.count { color: var(--muted); font-size: 0.85rem; }
-tr.group th { padding-top: 1rem; font-size: 0.95rem; color: var(--fg); }
 .card .branch { display: block; color: var(--muted); font-size: 0.8rem; margin-top: 0.4rem; }
 
 .commits { list-style: none; padding: 0; margin: 0.5rem 0; }
 .commits li { padding: 0.3rem 0; border-bottom: 1px solid var(--rule); }
 .commits time { color: var(--muted); font-size: 0.85rem; font-variant-numeric: tabular-nums; margin-right: 0.5rem; }
 .commits:empty { display: none; }
+
+/* The main page: hero, port tiles in each game's own colours, systems. */
+.hero {
+  background: var(--hero); color: #fff; border-radius: 14px;
+  padding: 1.75rem 1.5rem 1.5rem; margin-bottom: 1.5rem;
+  box-shadow: 0 10px 30px rgb(60 40 140 / 0.25);
+}
+.hero h1 { font-size: 2.6rem; margin: 0 0 0.4rem; letter-spacing: -0.01em; }
+.hero .lede { color: rgb(255 255 255 / 0.88); margin: 0; }
+.hero a { color: #fff; }
+.stats { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; padding: 0; margin: 1.1rem 0 0; }
+.stats li {
+  background: rgb(255 255 255 / 0.14); border: 1px solid rgb(255 255 255 / 0.25);
+  border-radius: 999px; padding: 0.2rem 0.8rem; font-size: 0.9rem;
+}
+.stats strong { font-size: 1.05rem; }
+.hero-links { margin: 1.1rem 0 0; }
+.button {
+  display: inline-block; background: #fff; color: #3b2a8c !important; font-weight: 600;
+  border-radius: 8px; padding: 0.45rem 0.9rem;
+}
+.button:hover { text-decoration: none; box-shadow: 0 2px 10px rgb(0 0 0 / 0.25); }
+
+.tiles { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); margin: 1rem 0; }
+.tile.theme {
+  position: relative; display: flex; flex-direction: column; color: var(--fg);
+  border-radius: 10px; overflow: hidden; font-size: 16px;
+  border: 1px solid var(--rule); background-attachment: scroll;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 0.12); transition: transform 0.15s, box-shadow 0.15s;
+}
+.tile:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgb(0 0 0 / 0.22); }
+.tile header {
+  display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+  background: var(--head-bg); border-bottom: var(--head-rule); padding: 0.7rem 0.9rem;
+}
+.tile h3 { margin: 0; font-size: 1.3rem; line-height: 1.15; }
+.tile h3 a { color: var(--head-fg); }
+.tile h3 a:hover { text-decoration: none; }
+/* The whole tile opens the port's page; the date link sits above it. */
+.tile h3 a::after { content: ""; position: absolute; inset: 0; }
+.tile-system {
+  flex: none; font-size: 0.72rem; font-weight: 600; color: #fff;
+  background: var(--accent); border-radius: 4px; padding: 0.15em 0.45em;
+}
+.tile-body { padding: 0.8rem 0.9rem 0.9rem; display: flex; flex-direction: column; flex: 1; }
+.tile .game { margin: 0 0 0.5rem; font-size: 0.9rem; }
+.tile .badge { align-self: flex-start; }
+.tile p.summary { margin: 0.6rem 0; font-size: 0.9rem; flex: 1; }
+.tile-updated { margin: 0; font-size: 0.8rem; color: var(--muted); }
+.tile-updated a { position: relative; z-index: 1; }
+
+.system-card { border-top: 4px solid var(--accent); }
+.system-card:hover { border-color: var(--accent); }
+.system-card h3 { display: flex; align-items: center; gap: 0.5rem; }
+.system-card h3::before {
+  content: ""; width: 0.65rem; height: 0.65rem; border-radius: 50%; background: var(--accent);
+}
+/* Only the newest three; the script puts them first once it has the dates. */
+.tiles[data-by-date] .tile:nth-child(n+4) { display: none; }
+.more { margin: 0; text-align: right; font-weight: 600; }
+.updated { white-space: nowrap; }
+tr.group th { padding-top: 1rem; font-size: 0.95rem; color: var(--fg); }
+tr.group th a { display: inline-flex; align-items: center; gap: 0.45rem; color: var(--fg); }
+tr.group th a::before { content: ""; width: 0.6rem; height: 0.6rem; border-radius: 50%; background: var(--accent); }
+
+@media (max-width: 30rem) {
+  .hero { padding: 1.25rem 1rem 1.1rem; }
+  .hero h1 { font-size: 2.1rem; }
+}

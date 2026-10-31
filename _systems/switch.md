@@ -2,6 +2,7 @@
 title: Switch
 full: Nintendo Switch
 order: 3
+accent: "#e03131"
 cpu: AArch64 (ARM Cortex-A57)
 base: x86recomp Horizon platform module, on an AArch64 core
 branch: horizon

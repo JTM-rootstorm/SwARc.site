@@ -1,14 +1,26 @@
 ---
 title: x86recomp
+port_tiles: true
 ---
+{%- assign systems = site.systems | sort: "order" -%}
+{%- assign playable = site.projects | where: "stage", "playable" -%}
+{%- assign ingame = site.projects | where: "stage", "ingame" %}
 
-# x86recomp
-
-<p class="lede">Static recompilation of games into native 64-bit programs
-for Linux and macOS (x86 and x86-64 PC games on main; PowerPC and
-AArch64 consoles on their own branches): the scaffold that gets a game running
-natively while its code is replaced, piece by piece, with hand-written
-C++.</p>
+<section class="hero">
+  <h1>x86recomp</h1>
+  <p class="lede">Static recompilation of games into native 64-bit programs
+  for Linux and macOS (x86 and x86-64 PC games on main; PowerPC and
+  AArch64 consoles on their own branches): the scaffold that gets a game
+  running natively while its code is replaced, piece by piece, with
+  hand-written C++.</p>
+  <ul class="stats">
+    <li><strong>{{ site.projects.size }}</strong> ports</li>
+    <li><strong>{{ systems.size }}</strong> systems</li>
+    <li><strong>{{ playable.size }}</strong> playable</li>
+    <li><strong>{{ ingame.size }}</strong> in game</li>
+  </ul>
+  <p class="hero-links"><a class="button" href="{{ site.repo }}">x86recomp on GitHub</a></p>
+</section>
 
 A game's machine code is translated ahead of time into C++ and linked
 against a runtime that reimplements the parts of its operating system
@@ -16,13 +28,36 @@ and middleware the game uses. There is no emulator, interpreter or Wine
 in the result, and no game code or data in any of the repositories: each
 port builds from your own copy of the game.
 
+## Recently updated
+
+<div class="tiles" data-by-date>
+{%- for s in systems %}
+  {%- assign ports = site.projects | where: "system", s.slug | sort: "order" %}
+  {%- for p in ports %}
+  <article class="tile theme theme-{{ p.theme }}">
+    <header>
+      <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
+      <span class="tile-system" style="--accent: {{ s.accent }}">{{ s.title }}</span>
+    </header>
+    <div class="tile-body">
+      <p class="game">{{ p.game }} ({{ p.year }}{% if p.arch %}, {{ p.arch }}{% endif %})</p>
+      <span class="badge badge-{{ p.stage }}">{{ p.status }}</span>
+      <p class="summary">{{ p.summary }}</p>
+      <p class="tile-updated">Updated {% if p.repo %}{% include updated.html repo=p.repo %}{% else %}{% include updated.html repo=site.repo branch=s.branch %}{% endif %}</p>
+    </div>
+  </article>
+  {%- endfor %}
+{%- endfor %}
+</div>
+
+<p class="more"><a href="{{ '/ports/' | relative_url }}">All ports &rarr;</a></p>
+
 ## Systems
 
-{% assign systems = site.systems | sort: "order" -%}
 <div class="cards">
 {%- for s in systems %}
   {%- assign ports = site.projects | where: "system", s.slug %}
-  <a class="card" href="{{ s.url | relative_url }}">
+  <a class="card system-card" href="{{ s.url | relative_url }}" style="--accent: {{ s.accent }}">
     <h3>{{ s.full }}</h3>
     <p class="game">{{ s.cpu }}</p>
     <span class="badge badge-system">{{ s.state }}</span>{% if s.branch %} <span class="branch">on branch <code>{{ s.branch }}</code></span>{% endif %}
@@ -30,31 +65,6 @@ port builds from your own copy of the game.
     <p class="summary count">{% if ports.size == 0 %}No ports yet{% elsif ports.size == 1 %}1 port{% else %}{{ ports.size }} ports{% endif %}</p>
   </a>
 {%- endfor %}
-</div>
-
-## All ports
-
-<div class="table-scroll">
-<table>
-  <thead><tr><th>Port</th><th>Game</th><th>Status</th><th>Platforms</th><th>Updated</th></tr></thead>
-  {%- for s in systems %}
-  {%- assign ports = site.projects | where: "system", s.slug | sort: "order" %}
-  {%- if ports.size > 0 %}
-  <tbody>
-    <tr class="group"><th colspan="5"><a href="{{ s.url | relative_url }}">{{ s.full }}</a></th></tr>
-    {%- for p in ports %}
-    <tr>
-      <td><a href="{{ p.url | relative_url }}">{{ p.title }}</a></td>
-      <td>{{ p.game }} ({{ p.year }}{% if p.arch %}, {{ p.arch }}{% endif %})</td>
-      <td><span class="badge badge-{{ p.stage }}">{{ p.status }}</span></td>
-      <td>{{ p.platforms }}</td>
-      <td>{% if p.repo %}{% include updated.html repo=p.repo %}{% else %}{% include updated.html repo=site.repo branch=s.branch %}{% endif %}</td>
-    </tr>
-    {%- endfor %}
-  </tbody>
-  {%- endif %}
-  {%- endfor %}
-</table>
 </div>
 
 ## What x86recomp provides

@@ -2,6 +2,7 @@
 title: PC
 full: PC (x86 and x86-64)
 order: 1
+accent: "#1c7ed6"
 cpu: x86 (32-bit) and x86-64
 base: x86recomp core
 state: Ports running
