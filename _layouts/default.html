@@ -6,14 +6,15 @@
   <title>{% if page.title and page.url != "/" %}{{ page.title }} · {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.summary | default: site.description | strip }}">
   {%- assign fonts = page.fonts %}
-  {%- if page.port_tiles %}{% assign fonts = site.projects | map: "fonts" | compact | join: "&" %}{% endif %}
+  {%- if page.port_tiles %}{% assign tiles = site.projects %}{% elsif page.collection == "systems" %}{% assign tiles = site.projects | where: "system", page.slug %}{% endif %}
+  {%- if tiles.size > 0 %}{% assign fonts = tiles | map: "fonts" | compact | join: "&" %}{% endif %}
   {%- if fonts %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?{{ fonts }}&display=swap">
   {%- endif %}
   <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
-  {%- if page.theme or page.port_tiles %}
+  {%- if page.theme or tiles.size > 0 %}
   <link rel="stylesheet" href="{{ '/assets/themes.css' | relative_url }}">
   {%- endif %}
 </head>

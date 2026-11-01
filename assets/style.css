@@ -203,3 +203,22 @@ tr.group th a::before { content: ""; width: 0.6rem; height: 0.6rem; border-radiu
   .hero { padding: 1.25rem 1rem 1.1rem; }
   .hero h1 { font-size: 2.1rem; }
 }
+
+/* System pages: a hero in the system's accent colour. */
+.system-hero {
+  background: linear-gradient(125deg, var(--accent), color-mix(in srgb, var(--accent) 45%, #0b0b14));
+  color: #fff; border-radius: 14px; padding: 1.25rem 1.5rem 1.4rem; margin-bottom: 1.25rem;
+  box-shadow: 0 10px 28px color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.system-hero a { color: #fff; }
+.system-hero .crumb a { color: rgb(255 255 255 / 0.8); }
+.system-hero h1 { font-size: 2.4rem; margin: 0.2rem 0 0.1rem; }
+.system-hero .cpu { margin: 0; color: rgb(255 255 255 / 0.85); }
+.system-hero .stats { margin-top: 0.9rem; }
+.system-hero code { background: rgb(255 255 255 / 0.18); color: #fff; }
+.system .facts { border-top: 3px solid var(--accent); }
+.system h2 { border-top: none; border-left: 4px solid var(--accent); padding: 0 0 0 0.6rem; }
+.empty {
+  border: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 10px;
+  padding: 1rem; color: var(--muted); text-align: center;
+}

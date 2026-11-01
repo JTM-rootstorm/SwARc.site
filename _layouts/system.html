@@ -2,17 +2,23 @@
 layout: default
 ---
 {%- assign ports = site.projects | where: "system", page.slug | sort: "order" -%}
-<article class="system">
-  <p class="crumb"><a href="{{ '/' | relative_url }}">Systems</a></p>
-  <h1>{{ page.full }}</h1>
+<article class="system" style="--accent: {{ page.accent }}">
+  <header class="system-hero">
+    <p class="crumb"><a href="{{ '/' | relative_url }}">Systems</a></p>
+    <h1>{{ page.full }}</h1>
+    <p class="cpu">{{ page.cpu }}</p>
+    <ul class="stats">
+      <li>{{ page.state }}</li>
+      <li>{% if ports.size == 0 %}No ports yet{% elsif ports.size == 1 %}<strong>1</strong> port{% else %}<strong>{{ ports.size }}</strong> ports{% endif %}</li>
+      {%- if page.branch %}
+      <li>branch <a href="{{ site.repo }}/tree/{{ page.branch }}"><code>{{ page.branch }}</code></a></li>
+      {%- endif %}
+    </ul>
+  </header>
 
   <dl class="facts">
-    <dt>CPU</dt>
-    <dd>{{ page.cpu }}</dd>
     <dt>Built on</dt>
     <dd>{{ page.base }}</dd>
-    <dt>State</dt>
-    <dd>{{ page.state }}</dd>
     {%- if page.branch %}
     <dt>Progress</dt>
     <dd>x86recomp branch <a href="{{ site.repo }}/tree/{{ page.branch }}"><code>{{ page.branch }}</code></a> (<a href="{{ site.repo }}/commits/{{ page.branch }}">commits</a>), until merged into main</dd>
@@ -25,12 +31,12 @@ layout: default
 
   <h2>Ports</h2>
   {%- if ports.size > 0 %}
-  <div class="cards">
+  <div class="tiles">
     {%- for p in ports %}
-    {% include card.html p=p %}
+    {% include tile.html p=p %}
     {%- endfor %}
   </div>
   {%- else %}
-  <p>None yet.</p>
+  <p class="empty">No ports yet: the module comes first.</p>
   {%- endif %}
 </article>

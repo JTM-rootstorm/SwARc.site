@@ -34,18 +34,7 @@ port builds from your own copy of the game.
 {%- for s in systems %}
   {%- assign ports = site.projects | where: "system", s.slug | sort: "order" %}
   {%- for p in ports %}
-  <article class="tile theme theme-{{ p.theme }}">
-    <header>
-      <h3><a href="{{ p.url | relative_url }}">{{ p.title }}</a></h3>
-      <span class="tile-system" style="--accent: {{ s.accent }}">{{ s.title }}</span>
-    </header>
-    <div class="tile-body">
-      <p class="game">{{ p.game }} ({{ p.year }}{% if p.arch %}, {{ p.arch }}{% endif %})</p>
-      <span class="badge badge-{{ p.stage }}">{{ p.status }}</span>
-      <p class="summary">{{ p.summary }}</p>
-      <p class="tile-updated">Updated {% if p.repo %}{% include updated.html repo=p.repo %}{% else %}{% include updated.html repo=site.repo branch=s.branch %}{% endif %}</p>
-    </div>
-  </article>
+  {% include tile.html p=p tag=true %}
   {%- endfor %}
 {%- endfor %}
 </div>
