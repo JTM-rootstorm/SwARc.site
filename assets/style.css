@@ -222,3 +222,22 @@ tr.group th a::before { content: ""; width: 0.6rem; height: 0.6rem; border-radiu
   border: 2px dashed color-mix(in srgb, var(--accent) 55%, transparent); border-radius: 10px;
   padding: 1rem; color: var(--muted); text-align: center;
 }
+
+/* All Ports: status filter. */
+.filters { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0; }
+.filters button {
+  font: inherit; font-size: 0.85rem; font-weight: 600; cursor: pointer;
+  color: var(--muted); background: var(--panel);
+  border: 1px solid var(--rule); border-radius: 999px; padding: 0.3rem 0.8rem;
+}
+.filters button[class] { color: var(--fg); }
+.filters button span { font-weight: 400; opacity: 0.7; margin-left: 0.2rem; }
+.filters button:hover { border-color: currentColor; }
+.filters button[aria-pressed="true"] { color: var(--fg); border-color: var(--fg); background: var(--code-bg); }
+.filters button[class][aria-pressed="true"] {
+  color: var(--stage); border-color: currentColor; background: color-mix(in srgb, currentColor 14%, transparent);
+}
+.filters .badge-playable { --stage: var(--playable); }
+.filters .badge-ingame { --stage: var(--ingame); }
+.filters .badge-boots { --stage: var(--boots); }
+.filters .badge-early { --stage: var(--early); }

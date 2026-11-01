@@ -39,7 +39,7 @@ port builds from your own copy of the game.
 {%- endfor %}
 </div>
 
-<p class="more"><a href="{{ '/ports/' | relative_url }}">All ports &rarr;</a></p>
+<p class="more"><a href="{{ '/ports/' | relative_url }}">All Ports &rarr;</a></p>
 
 ## Systems
 
