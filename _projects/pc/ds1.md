@@ -51,7 +51,13 @@ cursor) but not yet played by hand.
 ## Native replacements
 
 - **Widescreen**: the game's window and display mode follow the host
-  desktop instead of a fixed 1024x768.
+  desktop instead of a fixed 1024x768, and the resolution list goes past
+  1024x768 to the desktop size and 16:9 modes up to 3840x2160 (listed in
+  the Video tab; choosing one there not yet tried).
+- **Hor+ field of view**: wide screens keep 4:3's vertical view and see
+  more at the sides, with nothing culled at the edges.
+- **UI scale**: the HUD and windows keep their 1024x768 proportions at
+  any height, the compass and the cursor with them.
 - **Software cursor on the GPU**: the cursor is blended on the GPU with
   an asynchronous readback, which took a 5K display from ~50 to a steady
   60 fps with the window focused.
@@ -61,7 +67,6 @@ cursor) but not yet played by hand.
 - The GDI "Lucida Console" font texture is blank (dev console and debug
   text).
 - IME functions are not provided.
-- The game's own resolution list stops at 1024x768.
 
 The project's [FINDINGS.md]({{ page.repo }}/blob/main/FINDINGS.md)
 tracks what works, what was fixed and what is known to be missing.

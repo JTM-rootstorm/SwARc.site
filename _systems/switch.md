@@ -7,15 +7,17 @@ cpu: AArch64 (ARM Cortex-A57)
 base: SwARc Horizon platform module, on an AArch64 core
 branch: horizon
 state: Groundwork
-summary: An AArch64 core beside the x86 one, and the Horizon module on it. Lifts and runs a homebrew NRO checked against Unicorn; no ports yet.
+summary: An AArch64 core beside the x86 and PowerPC ones, and the Horizon module on it. Lifts and runs a homebrew NRO checked against Unicorn; no ports yet.
 ---
 
-The Switch's CPU is AArch64, so SwARc grows a CPU core for it beside
-the x86 one: an AArch64 lifter (`recomp_lift_a64`) and the CPU model its
-lifted code runs on (integer, flags, the exclusive monitor). The
-**Horizon** platform module sits on that core as Orbis sits on the x64
-one, and shares the same host layer (SDL3, ffmpeg, the graphics device,
-the mixer). A Switch game builds without the x86 path at all.
+The Switch's CPU is AArch64, so SwARc has a CPU core for it beside the
+x86 one: an AArch64 lifter (`recomp_lift_a64`) and the CPU model its
+lifted code runs on (integer, flags, the exclusive monitor). The core
+knows no console: it reads plain ELF itself, and its tests run on a
+test platform of their own. The **Horizon** platform module sits on
+that core as Orbis sits on the x86-64 one, and shares the same base
+(SDL3, ffmpeg, the graphics device, the mixer). A Switch game builds
+without the x86 core or Win32 at all.
 
 The module is developed on SwARc's
 [`{{ page.branch }}` branch]({{ site.repo }}/tree/{{ page.branch }})
@@ -25,10 +27,11 @@ log.
 
 Status: milestone 1. NRO loading and relocation, the guest address
 layout, process bring-up and the first supervisor calls are in. The
-tests lift a homebrew NRO fixture built from checked-in assembly and C,
-run it against Unicorn, replay every instruction form against Unicorn
+core's tests lift a fixture built from checked-in assembly and C, run
+it against Unicorn, replay every instruction form against Unicorn
 vectors (and the host CPU on arm64 hosts, also checked under
-qemu-aarch64), and catch planted mutations of the lifted semantics.
+qemu-aarch64), and catch planted mutations of the lifted semantics;
+Horizon runs the same fixture as a homebrew NRO.
 
 Next: milestone 2, a game's `main` lifted whole, reaching `nnMain` and
 reading its first RomFS files through `nn::fs`; then milestone 3, the

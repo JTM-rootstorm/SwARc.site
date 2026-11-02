@@ -55,6 +55,12 @@ lifted original by the project's tests.
 - **Renderer hot path**: culling, sky clipping, texture coordinate
   generation and the draw surface sort; lifted renderer code on the main
   thread went from 12.9% to 4.5%.
+- **Renderer back end**, native down to its GL calls: the GL state, a
+  stage's texture units, a flush's fog, deforms and colours, the stage
+  loop and every stage iterator, and the dlight pass, checked with every
+  GL call recorded. The training level never reaches the dlight pass or
+  the iterators for GL extensions the OpenGL HLE does not offer; only
+  the tests cover those.
 - **XAnim** evaluation and updates.
 - **Files**: the pk3 directory scan, zlib and the JPEG inverse DCT on
   the host.
@@ -62,8 +68,9 @@ lifted original by the project's tests.
 
 ## Next
 
-A renderer that drives SwARc's graphics device directly, building
-on the native hot path above.
+A renderer that drives SwARc's graphics device directly: with the back
+end native down to its GL calls, those calls can go to the device
+instead of through the OpenGL HLE.
 
 The project's [FINDINGS.md]({{ page.repo }}/blob/main/FINDINGS.md)
 tracks progress and [ARCHITECTURE.md]({{ page.repo }}/blob/main/ARCHITECTURE.md)

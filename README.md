@@ -1,13 +1,15 @@
 # SwARc.site
 
-The site for [SwARc](https://github.com/JTM-rootstorm/SwARc) and
-the game ports built on it, by system, served by GitHub Pages (Jekyll,
-no Actions).
+The site for [SwARc](https://github.com/JTM-rootstorm/SwARc), the Swiss
+Army Recompiler, and the game ports built on it, by system: served by
+GitHub Pages (Jekyll, no Actions) at
+<https://jtm-rootstorm.github.io/SwARc.site/>.
 
 - `index.md`: the landing page; its systems and port list are generated.
-- `_systems/<system>.md`: one page per system (PC, PS4, Switch, Xbox 360). `order`
-  sets its position in the Systems menu, `accent` its colour on the
-  landing page.
+- `_systems/<system>.md`: one page per system (PC, PS4, Switch, Xbox
+  360). `order` sets its position in the Systems menu, `accent` its
+  colour on the landing page, `branch` the SwARc branch it is developed
+  on until merged into main.
 - `_projects/<system>/<port>.md`: one page per port, served at
   `/<system>/<port>/`. The front matter holds the status shown on the
   landing page (`stage` is one of `playable`, `ingame`, `boots`, `early`
@@ -20,8 +22,8 @@ no Actions).
 - `theme` and `fonts` (a Google Fonts `css2` query) give a port's page
   its own look; the themes are in `assets/themes.css`.
 
-Preview locally:
+Preview locally, with the base path Pages serves it under:
 
 ```sh
-jekyll serve
+jekyll serve --baseurl /SwARc.site
 ```

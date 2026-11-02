@@ -8,10 +8,10 @@ port_tiles: true
 
 <section class="hero">
   <h1>SwARc</h1>
-  <p class="lede">The Swiss Army Recompiler: static recompilation of games
-  into native 64-bit programs for Linux and macOS (x86 and x86-64 PC games on main; PowerPC and
-  AArch64 consoles on their own branches): the scaffold that gets a game
-  running natively while its code is replaced, piece by piece, with
+  <p class="lede">The Swiss Army Recompiler: static recompilation of PC and
+  console games into native 64-bit programs for Linux and macOS (PC games
+  on main, the consoles on their own branches): the scaffold that gets a
+  game running natively while its code is replaced, piece by piece, with
   hand-written C++.</p>
   <ul class="stats">
     <li><strong>{{ site.projects.size }}</strong> ports</li>
@@ -58,40 +58,46 @@ port builds from your own copy of the game.
 
 ## What SwARc provides
 
-- **Lifter** (`recomp_lift`): emits C++ for every function of a game's
-  executables, one basic block at a time, with exact integer and flag
-  semantics.
-  - **x86** (32-bit PE): integer, x87 and SSE/SSE2.
-  - **x86-64**: PE32+ images on the Win64 ABI, and through platform
-    modules other formats on System V; AVX and the SSE3-4 extensions,
-    against a fixed CPU model (AMD family 16h) that grows only as the
-    lifter implements each feature bit-exactly.
-  - **AArch64** (on the `horizon` branch): a second core with its own
-    lifter (`recomp_lift_a64`) and CPU model, for the Switch.
-  - **PowerPC** (on the `x360` branch): a core for 64-bit PowerPC in
-    32-bit mode (`recomp_lift_ppc`), with exact floating point and VMX,
-    for the Xbox 360.
-- **CPU models**: exact 80-bit x87 (precision and rounding control,
-  status-word flags) and the XMM/YMM registers with MXCSR, on Berkeley
-  SoftFloat, tested bit for bit against the real CPU (or, for console
-  CPUs, an oracle: Unicorn for AArch64, QEMU for PowerPC).
-- **Runtime**: the guest address space, image loading, threads,
-  exceptions (SEH and x64 unwinding), crash and hang reports.
-- **Windows HLE**: Win32 on POSIX and SDL3, the UCRT and MSVCP140, Miles
-  Sound System (with EAX 1-3 on its own reverb), Bink, DirectDraw/Direct3D
-  7, OpenGL 1.x, Direct3D 9 and D3DX 9, DirectSound 8, DirectInput 8 and
-  XInput. Graphics run on SDL_GPU: Vulkan on Linux, native Metal on macOS.
-- **Shader translators**: D3DX 9's HLSL dialect and compiled Direct3D 9
-  shaders (models 1-3) to GLSL.
-- **Platform modules** (in progress): consoles plug into the shared
-  core and host layer instead of forking them, each on its own branch
-  until it is merged: Orbis for the
-  [PlayStation 4]({{ '/ps4/' | relative_url }}) on
-  [`ps4`]({{ site.repo }}/tree/ps4), and Horizon for the
-  [Switch]({{ '/switch/' | relative_url }}) on
-  [`horizon`]({{ site.repo }}/tree/horizon), and the Xbox 360 module
-  for the [Xbox 360]({{ '/x360/' | relative_url }}) on
-  [`x360`]({{ site.repo }}/tree/x360).
+Three layers, each building only on those below it: a **base** every
+guest shares, a **CPU core** per guest CPU, and **platform modules** (an
+operating system and its libraries) on a core. A game builds its own
+platform and core and nothing else: a PS4 game pulls in no Windows code,
+a Switch game no x86 code. The layers are on the
+[`split`]({{ site.repo }}/tree/split) branch until it is merged into
+main; the console modules sit on top of it.
+
+- **Base**: the host layer (SDL3 windows, input and audio output, ffmpeg,
+  a graphics device on Vulkan and native Metal with its shader
+  compilers, a software mixer with EAX 1-3 reverb), the guest address
+  space, frame pacing, and Berkeley SoftFloat under every core's
+  floating point.
+- **CPU cores**, each a lifter that emits C++ for every function of a
+  game's executables with exact semantics, the CPU model that code runs
+  on, and tests against an oracle:
+  - **x86 and x86-64** (`recomp_lift`): integer, exact 80-bit x87, SSE
+    to SSE4.2 and AVX with MXCSR, against a fixed CPU model (AMD family
+    16h) that grows only as each feature lifts bit-exactly; tested
+    against the host CPU.
+  - **PowerPC** (`recomp_lift_ppc`, branch
+    [`ppc`]({{ site.repo }}/tree/ppc)): 64-bit PowerPC in 32-bit mode,
+    exact floating point, VMX and the Xenon's VMX128; tested against
+    QEMU's PowerPC 970.
+  - **AArch64** (`recomp_lift_a64`, branch
+    [`horizon`]({{ site.repo }}/tree/horizon)): integer, flags and the
+    exclusive monitor so far; tested against Unicorn and, on arm64
+    hosts, the CPU itself.
+- **Platform modules**, each reading its own executable formats and
+  reimplementing its system libraries (HLE):
+  - **Win32** (PC games): PE images, the Win32 process and SEH, Win32 on
+    POSIX, the UCRT and MSVCP140, Miles Sound System, Bink,
+    DirectDraw/Direct3D 7, OpenGL 1.x, Direct3D 9 and D3DX 9 (HLSL and
+    compiled shaders to GLSL), DirectSound 8, DirectInput 8 and XInput.
+  - **Orbis** for the [PlayStation 4]({{ '/ps4/' | relative_url }}), on
+    the x86-64 core (branch [`ps4`]({{ site.repo }}/tree/ps4)).
+  - **Xbox 360** for the [Xbox 360]({{ '/x360/' | relative_url }}), on
+    the PowerPC core (branch [`x360`]({{ site.repo }}/tree/x360)).
+  - **Horizon** for the [Switch]({{ '/switch/' | relative_url }}), on
+    the AArch64 core (branch [`horizon`]({{ site.repo }}/tree/horizon)).
 
 The lifted code is an exact oracle, not the end product: each port
 replaces lifted functions with native C++ one subsystem at a time,
