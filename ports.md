@@ -6,7 +6,7 @@ permalink: /ports/
 
 # All Ports
 
-Every game port built on x86recomp, by system.
+Every game port built on SwARc, by system.
 
 {%- assign stages = "playable:Playable,ingame:In game,boots:Boots,early:Early" | split: "," %}
 <div class="filters" role="group" aria-label="Filter by status" hidden>

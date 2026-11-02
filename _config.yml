@@ -1,8 +1,8 @@
-title: x86recomp
+title: SwARc
 description: >-
-  Static recompilation of x86 and x86-64 games into native programs, and
-  the game ports built on it, by system.
-repo: https://github.com/JTM-rootstorm/x86recomp
+  SwARc, the Swiss Army Recompiler: static recompilation of PC and console
+  games into native programs, and the game ports built on it, by system.
+repo: https://github.com/JTM-rootstorm/SwARc
 
 markdown: kramdown
 kramdown:

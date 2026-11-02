@@ -4,20 +4,20 @@ full: Nintendo Switch
 order: 3
 accent: "#e03131"
 cpu: AArch64 (ARM Cortex-A57)
-base: x86recomp Horizon platform module, on an AArch64 core
+base: SwARc Horizon platform module, on an AArch64 core
 branch: horizon
 state: Groundwork
 summary: An AArch64 core beside the x86 one, and the Horizon module on it. Lifts and runs a homebrew NRO checked against Unicorn; no ports yet.
 ---
 
-The Switch's CPU is AArch64, so x86recomp grows a CPU core for it beside
+The Switch's CPU is AArch64, so SwARc grows a CPU core for it beside
 the x86 one: an AArch64 lifter (`recomp_lift_a64`) and the CPU model its
 lifted code runs on (integer, flags, the exclusive monitor). The
 **Horizon** platform module sits on that core as Orbis sits on the x64
 one, and shares the same host layer (SDL3, ffmpeg, the graphics device,
 the mixer). A Switch game builds without the x86 path at all.
 
-The module is developed on x86recomp's
+The module is developed on SwARc's
 [`{{ page.branch }}` branch]({{ site.repo }}/tree/{{ page.branch }})
 until it is merged into main; its
 [commits]({{ site.repo }}/commits/{{ page.branch }}) are the progress

@@ -8,7 +8,7 @@ fonts: "family=Teko:wght@500;600&family=Barlow:ital,wght@0,400;0,600;1,400"
 order: 1
 stage: ingame
 status: In game
-summary: Plays from a new game through the intro into gameplay, built on ReXGlue for now with an emulated GPU; moving onto x86recomp's Xbox 360 module.
+summary: Plays from a new game through the intro into gameplay, built on ReXGlue for now with an emulated GPU; moving onto SwARc's Xbox 360 module.
 platforms: Linux x86-64 (Vulkan)
 release: Title 4D5307D5, disc release (extracted from your own copy)
 repo: https://github.com/JTM-rootstorm/Gears1-ReCogged
@@ -17,7 +17,7 @@ repo: https://github.com/JTM-rootstorm/Gears1-ReCogged
 The game's PowerPC code is recompiled ahead of time to C++. For now the
 port is built on [ReXGlue](https://github.com/rexglue/rexglue-sdk), which
 recompiles it and runs it on Xenia's kernel and an emulated Xenos GPU.
-Gears is the reason x86recomp grew its Xbox 360 module: the port moves
+Gears is the reason SwARc grew its Xbox 360 module: the port moves
 onto that module, which already lifts the game and runs its start-up,
 as the module matures. Nothing draws there yet.
 
@@ -49,4 +49,4 @@ as the module matures. Nothing draws there yet.
 - The native renderer drawing frames on its own.
 - Native seams for the rest of the system layer (input, audio, files,
   threads), so ReXGlue becomes a scaffold.
-- The move onto x86recomp's Xbox 360 module; later macOS on arm64.
+- The move onto SwARc's Xbox 360 module; later macOS on arm64.

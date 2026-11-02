@@ -15,7 +15,7 @@ repo: https://github.com/JTM-rootstorm/LSWTCS_Rebricked
 ---
 
 A native port of LEGO Star Wars: The Complete Saga, and the game that
-brought Direct3D 9, D3DX 9 and the HLSL translator into x86recomp: its
+brought Direct3D 9, D3DX 9 and the HLSL translator into SwARc: its
 renderer generates HLSL at run time. Goals beyond running natively:
 widescreen at any resolution and aspect ratio, and an uncapped frame
 rate as an option.
@@ -50,7 +50,7 @@ into the cantina at a steady 60 fps (fullscreen and windowed) with the
 characters' shadows; with `LSWTCS_LEVEL`, Negotiations loads and runs.
 Not yet played by hand on the Mac: scripted keys do not reach the game's
 DirectInput keyboard in a background window, so the player has not been
-moved there. Bringing it up on Metal fixed four things in x86recomp: the
+moved there. Bringing it up on Metal fixed four things in SwARc: the
 window title (Windows-1252 text), the hidden fullscreen window, rendering
 to mip levels, and sampler LOD bias, which Metal lacks (the shadows).
 

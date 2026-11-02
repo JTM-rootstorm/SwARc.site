@@ -26,7 +26,7 @@ The game's five modules (`CoDSP.exe`, `gamex86.dll`, `cgamex86.dll`,
 program. It boots through the intro cinematics to the main menu with its
 music, starts a new game through the briefing, and the training level
 plays through to completion (played by hand). EAX 3 works through the
-game's own EAX Manager on x86recomp's providers.
+game's own EAX Manager on SwARc's providers.
 
 ### macOS
 
@@ -62,7 +62,7 @@ lifted original by the project's tests.
 
 ## Next
 
-A renderer that drives x86recomp's graphics device directly, building
+A renderer that drives SwARc's graphics device directly, building
 on the native hot path above.
 
 The project's [FINDINGS.md]({{ page.repo }}/blob/main/FINDINGS.md)

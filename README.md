@@ -1,6 +1,6 @@
-# x86recomp.github.io
+# SwARc.site
 
-The site for [x86recomp](https://github.com/JTM-rootstorm/x86recomp) and
+The site for [SwARc](https://github.com/JTM-rootstorm/SwARc) and
 the game ports built on it, by system, served by GitHub Pages (Jekyll,
 no Actions).
 
@@ -16,7 +16,7 @@ no Actions).
   `system:` default in `_config.yml`.
 - "Updated" dates are not kept by hand: the page asks the GitHub API for
   the latest commit to the port's `repo`, or, for a port without a public
-  one, to x86recomp on its system's `branch` (main for PC).
+  one, to SwARc on its system's `branch` (main for PC).
 - `theme` and `fonts` (a Google Fonts `css2` query) give a port's page
   its own look; the themes are in `assets/themes.css`.
 

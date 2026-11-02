@@ -4,18 +4,18 @@ full: PlayStation 4
 order: 2
 accent: "#7048e8"
 cpu: x86-64 (AMD Jaguar, family 16h)
-base: x86recomp Orbis platform module
+base: SwARc Orbis platform module
 branch: ps4
 state: Module in progress
-summary: The first console module on x86recomp's core. The PS4's CPU is x86-64, so it reuses the x64 lifter and adds a platform (executable format, system libraries, GPU).
+summary: The first console module on SwARc's core. The PS4's CPU is x86-64, so it reuses the x64 lifter and adds a platform (executable format, system libraries, GPU).
 ---
 
-The PS4 runs x86-64 code on an AMD Jaguar CPU, which x86recomp's x64
+The PS4 runs x86-64 code on an AMD Jaguar CPU, which SwARc's x64
 lifter already models. What a PS4 game needs on top of it is a
 **platform module**, Orbis, that plugs into the shared core instead of
 forking it: PC builds never compile or link it.
 
-The module is developed on x86recomp's
+The module is developed on SwARc's
 [`{{ page.branch }}` branch]({{ site.repo }}/tree/{{ page.branch }})
 until it is merged into main; its
 [commits]({{ site.repo }}/commits/{{ page.branch }}) are the progress
@@ -32,7 +32,7 @@ log.
   command processor, AudioOut on the software mixer, AvPlayer on ffmpeg,
   SaveData, networking and PSN (signed out), fibers, the NGS2 sound
   engine, fonts on FreeType, the pad and trophies.
-- **GPU front end** on x86recomp's graphics device: draws and compute
+- **GPU front end** on SwARc's graphics device: draws and compute
   dispatches, GCN shaders translated to GLSL, textures in the console's
   tile modes, compute image stores.
 - **Next**: the rest of the GPU (the shader instructions left, render

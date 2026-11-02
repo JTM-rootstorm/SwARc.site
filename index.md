@@ -1,5 +1,5 @@
 ---
-title: x86recomp
+title: SwARc
 port_tiles: true
 ---
 {%- assign systems = site.systems | sort: "order" -%}
@@ -7,9 +7,9 @@ port_tiles: true
 {%- assign ingame = site.projects | where: "stage", "ingame" %}
 
 <section class="hero">
-  <h1>x86recomp</h1>
-  <p class="lede">Static recompilation of games into native 64-bit programs
-  for Linux and macOS (x86 and x86-64 PC games on main; PowerPC and
+  <h1>SwARc</h1>
+  <p class="lede">The Swiss Army Recompiler: static recompilation of games
+  into native 64-bit programs for Linux and macOS (x86 and x86-64 PC games on main; PowerPC and
   AArch64 consoles on their own branches): the scaffold that gets a game
   running natively while its code is replaced, piece by piece, with
   hand-written C++.</p>
@@ -19,7 +19,7 @@ port_tiles: true
     <li><strong>{{ playable.size }}</strong> playable</li>
     <li><strong>{{ ingame.size }}</strong> in game</li>
   </ul>
-  <p class="hero-links"><a class="button" href="{{ site.repo }}">x86recomp on GitHub</a></p>
+  <p class="hero-links"><a class="button" href="{{ site.repo }}">SwARc on GitHub</a></p>
 </section>
 
 A game's machine code is translated ahead of time into C++ and linked
@@ -56,7 +56,7 @@ port builds from your own copy of the game.
 {%- endfor %}
 </div>
 
-## What x86recomp provides
+## What SwARc provides
 
 - **Lifter** (`recomp_lift`): emits C++ for every function of a game's
   executables, one basic block at a time, with exact integer and flag

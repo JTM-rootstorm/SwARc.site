@@ -15,7 +15,7 @@ release: CUSA01130, version 01.00 (decrypted dump of your own copy)
 repo: https://github.com/JTM-rootstorm/GravityRush-Reshifted
 ---
 
-The first game on x86recomp's PS4 platform module, Orbis, and the test
+The first game on SwARc's PS4 platform module, Orbis, and the test
 case it is being built against. It tracks the module's `ps4` branch.
 
 ## Status
@@ -33,7 +33,7 @@ case it is being built against. It tracks the module's `ps4` branch.
   reverb and mastering racks, mixed at 48 kHz.
 - **Fonts** follow the console's FreeType use: its 11 fonts, kerned from
   GPOS or `kern` as the console does.
-- **Picture**: the GPU front end draws on x86recomp's graphics device.
+- **Picture**: the GPU front end draws on SwARc's graphics device.
   Every vertex, pixel and compute shader of the game translates but
   one; tiled textures (1D, 2D, depth) are read and compute image stores
   run. The logos, the attract movie's scene and the title prompt

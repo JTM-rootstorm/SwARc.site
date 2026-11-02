@@ -14,9 +14,9 @@ platforms: Linux x86-64 and macOS (planned)
 release: GOG
 ---
 
-Quake II Enhanced (KEX engine) opens x86recomp's 64-bit path: x64 PE
+Quake II Enhanced (KEX engine) opens SwARc's 64-bit path: x64 PE
 images, the Win64 ABI, AVX, and a Direct3D 11 renderer to bring onto
-x86recomp's graphics device.
+SwARc's graphics device.
 
 ## Status
 

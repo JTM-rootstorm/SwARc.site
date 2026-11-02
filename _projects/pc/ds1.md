@@ -8,13 +8,13 @@ fonts: "family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,600;1,40
 order: 1
 stage: playable
 status: Playable
-summary: Single player plays from a new game to Wesrin Cross, with sound, music, voices and movies. Where x86recomp was developed.
+summary: Single player plays from a new game to Wesrin Cross, with sound, music, voices and movies. Where SwARc was developed.
 platforms: Linux x86-64; macOS on Apple Silicon (in game, scripted runs)
 release: GOG, version 1.11.1
 repo: https://github.com/JTM-rootstorm/DS1-Rebuilt
 ---
 
-The project x86recomp grew out of: the lifter, x87 model, runtime and
+The project SwARc grew out of: the lifter, x87 model, runtime and
 HLE were written for Dungeon Siege and factored out into the shared
 library on 2026-10-12.
 
