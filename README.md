@@ -20,10 +20,11 @@ GitHub Pages (Jekyll, built by `.github/workflows/pages.yml`) at
   `.github/scripts/commits.py` writes the latest commits of the port's
   `repo`, or, for a port without a public one, of SwARc on its system's
   `branch` (main for PC), to `_data/commits.json` before each build. The
-  workflow builds on every push here and on a `repository_dispatch`
-  `commits` event, which SwARc and each port's repository send after a
-  push of their own (with a token for this repository in their
-  `SITE_DISPATCH_TOKEN` secret).
+  workflow builds on every push here and on a
+  `repository_dispatch` `commits` event, which SwARc and each port's
+  repository send after a push of their own (with a token for this
+  repository in their `SITE_DISPATCH_TOKEN` secret). Commits that change
+  only `.github/` are left out.
 - `theme` and `fonts` (a Google Fonts `css2` query) give a port's page
   its own look; the themes are in `assets/themes.css`.
 

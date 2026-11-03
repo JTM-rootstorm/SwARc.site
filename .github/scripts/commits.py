@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Write _data/commits.json: the latest five commits of every repository
-(and branch) the site shows an "Updated" date or a commit list for.
+(and branch) the site shows an "Updated" date or a commit list for,
+leaving out commits that change only .github/ (CI, not the port).
 
 Keys are "<owner>/<repo>@<branch>" ("@" alone for the default branch),
 as _includes/updated.html and commits.html look them up. Run before
@@ -46,15 +47,30 @@ headers = {"Accept": "application/vnd.github+json"}
 if os.environ.get("GITHUB_TOKEN"):
     headers["Authorization"] = "Bearer " + os.environ["GITHUB_TOKEN"]
 
+
+def get(url):
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers)) as r:
+        return json.load(r)
+
+
+def ci_only(repo, sha):
+    files = get(f"https://api.github.com/repos/{repo}/commits/{sha}")["files"]
+    return bool(files) and all(f["filename"].startswith(".github/") for f in files)
+
+
 data = {}
 for key in sorted(keys):
     repo, branch = key.split("@")
-    url = f"https://api.github.com/repos/{repo}/commits?per_page=5"
+    url = f"https://api.github.com/repos/{repo}/commits?per_page=20"
     if branch:
         url += "&sha=" + branch
     try:
-        with urllib.request.urlopen(urllib.request.Request(url, headers=headers)) as r:
-            commits = json.load(r)
+        commits = []
+        for c in get(url):
+            if not ci_only(repo, c["sha"]):
+                commits.append(c)
+            if len(commits) == 5:
+                break
     except Exception as e:
         print(f"{key}: {e}")
         continue
