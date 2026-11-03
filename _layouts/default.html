@@ -67,72 +67,18 @@
       });
     })();
 
-    // Fill each "updated" link with the date of the latest commit it
-    // points at, and each recent-commits list with the last five (GitHub
-    // API, cached for an hour per visitor); then order the main page's
-    // port tiles by that date, newest first.
+    // Order the main page's port tiles by their latest commit, newest
+    // first (the dates are filled in at build time from _data/commits.json).
     (function () {
-      var groups = {};
-      document.querySelectorAll("a.updated[data-repo], .recent[data-repo]").forEach(function (el) {
-        var key = el.dataset.repo + "@" + (el.dataset.branch || "");
-        (groups[key] = groups[key] || []).push(el);
-      });
-      var loads = Object.keys(groups).map(function (key) {
-        var els = groups[key], repo = els[0].dataset.repo,
-            branch = els[0].dataset.branch, store = "commits:" + key;
-        function show(commits) {
-          els.forEach(function (el) {
-            if (el.tagName === "A") {
-              el.textContent = commits[0].date;
-              el.dataset.time = commits[0].time || commits[0].date;
-              el.title = "Latest commit to " + repo + (branch ? " (" + branch + ")" : "");
-              return;
-            }
-            var list = el.querySelector(".commits");
-            commits.forEach(function (c) {
-              var li = document.createElement("li"), a = document.createElement("a"),
-                  date = document.createElement("time");
-              a.href = c.url;
-              a.textContent = c.message;
-              date.textContent = c.date;
-              li.append(date, " ", a);
-              list.append(li);
-            });
-          });
-        }
-        try {
-          var hit = JSON.parse(localStorage.getItem(store));
-          if (hit && Date.now() - hit.at < 3600e3) return Promise.resolve(show(hit.commits));
-        } catch (e) {}
-        return fetch("https://api.github.com/repos/" + repo + "/commits?per_page=5" +
-              (branch ? "&sha=" + encodeURIComponent(branch) : ""))
-          .then(function (r) { return r.ok ? r.json() : Promise.reject(r.status); })
-          .then(function (data) {
-            var commits = data.map(function (c) {
-              return {
-                time: c.commit.committer.date,
-                date: c.commit.committer.date.slice(0, 10),
-                message: c.commit.message.split("\n")[0],
-                url: c.html_url
-              };
-            });
-            if (!commits.length) return;
-            show(commits);
-            try { localStorage.setItem(store, JSON.stringify({ at: Date.now(), commits: commits })); } catch (e) {}
-          })
-          .catch(function () {});
-      });
       var tiles = document.querySelector(".tiles[data-by-date]");
       if (!tiles) return;
-      Promise.all(loads).then(function () {
-        function time(tile) {
-          var a = tile.querySelector("a.updated");
-          return Date.parse(a && a.dataset.time) || 0;
-        }
-        Array.from(tiles.children)
-          .sort(function (x, y) { return time(y) - time(x); })
-          .forEach(function (tile) { tiles.append(tile); });
-      });
+      function time(tile) {
+        var a = tile.querySelector("a.updated");
+        return Date.parse(a && a.dataset.time) || 0;
+      }
+      Array.from(tiles.children)
+        .sort(function (x, y) { return time(y) - time(x); })
+        .forEach(function (tile) { tiles.append(tile); });
     })();
   </script>
 </body>

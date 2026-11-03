@@ -20,6 +20,5 @@ games. Graphics run on SDL_GPU: Vulkan on Linux, native Metal on macOS.
 32-bit games run in a 4 GiB guest address space with the stdcall/cdecl
 HLE ABI; x64 games use the Win64 ABI, the UCRT and MSVCP140, and AVX.
 
-On the [`split`]({{ site.repo }}/tree/split) branch, until it is merged
-into main, the x86 core and Win32 are separate layers: the core knows
-no Windows, so the PS4 module builds on it without any Win32 code.
+The x86 core and Win32 are separate layers: the core knows no Windows,
+so the PS4 module builds on it without any Win32 code.

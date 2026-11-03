@@ -1,9 +1,14 @@
 {%- comment -%}
-The latest commits to include.repo, filled in by the script in
-default.html; without it, a link to the commits.
+The latest commits to include.repo, from _data/commits.json; without
+them, only the link to the commits.
 {%- endcomment -%}
-<section class="recent" data-repo="{{ include.repo | remove: 'https://github.com/' }}">
+{%- assign key = include.repo | remove: 'https://github.com/' | append: '@' -%}
+<section class="recent">
   <h2>Recent commits</h2>
-  <ol class="commits"></ol>
+  <ol class="commits">
+  {%- for c in site.data.commits[key] %}
+    <li><time>{{ c.date }}</time> <a href="{{ c.url }}">{{ c.message }}</a></li>
+  {%- endfor %}
+  </ol>
   <p><a href="{{ include.repo }}/commits">All commits</a></p>
 </section>

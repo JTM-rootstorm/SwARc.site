@@ -3,3 +3,5 @@ _site/
 .jekyll-metadata
 .sass-cache/
 vendor/
+# Written by .github/scripts/commits.py at build time
+_data/commits.json

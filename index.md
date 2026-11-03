@@ -62,9 +62,9 @@ Three layers, each building only on those below it: a **base** every
 guest shares, a **CPU core** per guest CPU, and **platform modules** (an
 operating system and its libraries) on a core. A game builds its own
 platform and core and nothing else: a PS4 game pulls in no Windows code,
-a Switch game no x86 code. The layers are on the
-[`split`]({{ site.repo }}/tree/split) branch until it is merged into
-main; the console modules sit on top of it.
+a Switch game no x86 code. The layers, the x86 and PowerPC cores and
+Win32 are on main; each console module is on its own branch on top of
+it.
 
 - **Base**: the host layer (SDL3 windows, input and audio output, ffmpeg,
   a graphics device on Vulkan and native Metal with its shader
@@ -78,8 +78,7 @@ main; the console modules sit on top of it.
     to SSE4.2 and AVX with MXCSR, against a fixed CPU model (AMD family
     16h) that grows only as each feature lifts bit-exactly; tested
     against the host CPU.
-  - **PowerPC** (`recomp_lift_ppc`, branch
-    [`ppc`]({{ site.repo }}/tree/ppc)): 64-bit PowerPC in 32-bit mode,
+  - **PowerPC** (`recomp_lift_ppc`): 64-bit PowerPC in 32-bit mode,
     exact floating point, VMX and the Xenon's VMX128; tested against
     QEMU's PowerPC 970.
   - **AArch64** (`recomp_lift_a64`, branch

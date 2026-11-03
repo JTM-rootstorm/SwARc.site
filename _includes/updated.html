@@ -1,6 +1,8 @@
 {%- comment -%}
 The date of the latest commit in include.repo (on include.branch, else
-its default branch), filled in by the script in default.html; without
-it, a link to the commits.
+its default branch), from _data/commits.json; without it, a link to the
+commits.
 {%- endcomment -%}
-<a class="updated" href="{{ include.repo }}/commits{% if include.branch %}/{{ include.branch }}{% endif %}" data-repo="{{ include.repo | remove: 'https://github.com/' }}"{% if include.branch %} data-branch="{{ include.branch }}"{% endif %}>commits</a>
+{%- assign key = include.repo | remove: 'https://github.com/' | append: '@' | append: include.branch -%}
+{%- assign c = site.data.commits[key] | first -%}
+<a class="updated" href="{{ include.repo }}/commits{% if include.branch %}/{{ include.branch }}{% endif %}"{% if c %} data-time="{{ c.time }}" title="Latest commit to {{ include.repo | remove: 'https://github.com/' }}{% if include.branch %} ({{ include.branch }}){% endif %}"{% endif %}>{% if c %}{{ c.date }}{% else %}commits{% endif %}</a>

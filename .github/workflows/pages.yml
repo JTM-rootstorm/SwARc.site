@@ -1,0 +1,45 @@
+# Builds the site with the latest commits of SwARc and the ports
+# (.github/scripts/commits.py -> _data/commits.json) and deploys it to
+# Pages: on every push, when SwARc or a port's repository sends a
+# repository_dispatch "commits" event after a push of its own, and by
+# hand.
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [commits]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Latest commits
+        run: python3 .github/scripts/commits.py
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: actions/configure-pages@v5
+      - uses: actions/jekyll-build-pages@v1
+      - uses: actions/upload-pages-artifact@v3
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
