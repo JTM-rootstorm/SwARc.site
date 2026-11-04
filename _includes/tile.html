@@ -14,6 +14,6 @@ A port's tile, in its game's theme; include.tag adds its system's name.
     <p class="game">{{ p.game }} ({{ p.year }}{% if p.arch %}, {{ p.arch }}{% endif %})</p>
     <span class="badge badge-{{ p.stage }}">{{ p.status }}</span>
     <p class="summary">{{ p.summary }}</p>
-    <p class="tile-updated">Updated {% if p.repo %}{% include updated.html repo=p.repo %}{% else %}{% include updated.html repo=site.repo branch=s.branch %}{% endif %}</p>
+    <p class="tile-updated">Updated {% if p.repo %}{% include updated.html repo=p.repo branch=p.branch %}{% else %}{% include updated.html repo=site.repo branch=s.branch %}{% endif %}</p>
   </div>
 </article>

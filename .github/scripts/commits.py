@@ -39,7 +39,7 @@ for path in glob.glob(os.path.join(ROOT, "_systems", "*.md")):
 for path in glob.glob(os.path.join(ROOT, "_projects", "*", "*.md")):
     fm = front_matter(path)
     if "repo" in fm:
-        keys.add(slug(fm["repo"]) + "@")
+        keys.add(slug(fm["repo"]) + "@" + fm.get("branch", ""))
     else:
         keys.add(site_repo + "@" + branches.get(os.path.basename(os.path.dirname(path)), ""))
 
@@ -49,7 +49,7 @@ if os.environ.get("GITHUB_TOKEN"):
 
 
 def get(url):
-    with urllib.request.urlopen(urllib.request.Request(url, headers=headers)) as r:
+    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=30) as r:
         return json.load(r)
 
 

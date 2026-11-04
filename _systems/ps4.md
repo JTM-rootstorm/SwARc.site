@@ -24,24 +24,32 @@ log.
 
 - **Image reader**: decrypted SELF/ELF executables with SCE dynamic
   tables, function starts from `.eh_frame`, imports by NID.
-- **Process loader**: maps the executable and its bundled PRX modules,
-  links them, and runs their initialisers; the guest's main thread runs
-  beside the host loop.
+- **Process loader**: a generic `main()` for every game: it reads the
+  game's `param.sfo` and start modules from `app0`, maps the executable
+  and its bundled PRX modules, links them, runs their initialisers, and
+  loads the PRXs a game asks for at run time
+  (`sceKernelLoadStartModule`, `Dlsym`); the guest's main thread runs
+  beside the host loop. A lift script lifts every shipped PRX.
 - **System library HLE** by NID, on the core's System V x64 ABI:
   libkernel (memory, pthreads, files, event queues), libSceLibcInternal,
   the system and user services, VideoOut, GnmDriver and the GPU's
   command processor, AudioOut on the software mixer, AvPlayer on ffmpeg,
-  SaveData, networking and PSN (signed out), fibers, the NGS2 sound
-  engine, fonts on FreeType, the pad and trophies.
+  the NGS2 sound engine and the Ajm audio decoders (ATRAC9 and MP3 on
+  ffmpeg), SaveData, networking and PSN (signed out), fibers, fonts on
+  FreeType, Rtc, AppContent, the pad and trophies. The save data and
+  message dialogs are drawn by the runtime over the game's frames.
 - **GPU front end** on SwARc's graphics device: draws and compute
   dispatches, every GCN shader stage including geometry shaders (run as
   compute passes), textures in the console's tile modes, depth targets
   as 2D arrays with HTILE fast clears and their stencil sampled as a
-  texture, compute image stores. Work on the cost per draw took the
+  texture, compute image stores, texture levels, slices and cube maps,
+  indirect and rectangle draws. Work on the cost per draw took the
   busiest scene so far from about 5 to about 160 fps.
-- **Next**: ATRAC9 voices in NGS2, and the GPU thread's frame time.
+- **Next**: the GPU thread's frame time.
 
 Core lifter work it brought: CMPXCHG16B, FXSAVE/FXRSTOR, 256-bit
-conversions, `jrcxz`, locked `xchg`, and the System V x64 ABI.
+conversions, `jrcxz`, locked `xchg`, the System V x64 ABI, `setjmp` and
+`longjmp` in x64 images, SSE flush-to-zero, and polling loops loaded
+with acquire atomics so the compiler cannot drop them.
 
 Games come from your own console: a decrypted dump of a copy you own.

@@ -34,7 +34,7 @@ Every game port built on SwARc, by system.
       <td>{{ p.game }} ({{ p.year }}{% if p.arch %}, {{ p.arch }}{% endif %})</td>
       <td><span class="badge badge-{{ p.stage }}">{{ p.status }}</span></td>
       <td>{{ p.platforms }}</td>
-      <td>{% if p.repo %}{% include updated.html repo=p.repo %}{% else %}{% include updated.html repo=site.repo branch=s.branch %}{% endif %}</td>
+      <td>{% if p.repo %}{% include updated.html repo=p.repo branch=p.branch %}{% else %}{% include updated.html repo=site.repo branch=s.branch %}{% endif %}</td>
     </tr>
     {%- endfor %}
   </tbody>

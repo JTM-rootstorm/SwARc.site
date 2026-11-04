@@ -8,10 +8,11 @@ fonts: "family=Stardos+Stencil:wght@400;700&family=Special+Elite"
 order: 2
 stage: ingame
 status: In game
-summary: The training level plays through to completion. Widescreen, Hor+ FOV, a scaled HUD and exact frame caps are in; hot engine code is going native.
+summary: The training level plays through to completion. Widescreen, Hor+ FOV, a scaled HUD and exact frame caps are in; hot engine code and the renderer's back end are going native.
 platforms: Linux x86-64; macOS on Apple Silicon (training played by hand)
 release: Steam (app 2620), v1.5b, single player
 repo: https://github.com/JTM-rootstorm/CoD1-Reissued
+branch: render-backend
 ---
 
 A native port of Call of Duty's single player. Goals beyond running
@@ -58,9 +59,16 @@ lifted original by the project's tests.
 - **Renderer back end**, native down to its GL calls: the GL state, a
   stage's texture units, a flush's fog, deforms and colours, the stage
   loop and every stage iterator, and the dlight pass, checked with every
-  GL call recorded. The training level never reaches the dlight pass or
-  the iterators for GL extensions the OpenGL HLE does not offer; only
-  the tests cover those.
+  GL call recorded. On the
+  [`render-backend`]({{ page.repo }}/tree/render-backend) branch, until
+  it is merged, also the shadow volumes and their silhouette, the colour
+  and alpha generators, the vertex deforms, the texture coordinate
+  generators and modifiers, and the static model surfaces: each checked
+  against the lifted original over 200,000 random cases, and against
+  planted bugs the tests must catch. The training level reaches only
+  some of these (no dlight pass, deforms or most texture coordinate
+  generators, nor the iterators for GL extensions the OpenGL HLE does
+  not offer); only the tests cover the rest.
 - **XAnim** evaluation and updates.
 - **Files**: the pk3 directory scan, zlib and the JPEG inverse DCT on
   the host.
