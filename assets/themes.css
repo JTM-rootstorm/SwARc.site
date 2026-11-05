@@ -147,3 +147,24 @@
   background: linear-gradient(180deg, #202124, #17181a); border: 1px solid #34353a;
   border-top: 3px solid #8c1c13; border-radius: 2px;
 }
+
+/* Uncharted: a jungle at dusk, the map's route and the treasure's gold. */
+.theme-uncharted {
+  --scheme: dark;
+  --bg: #18211c; --fg: #ece2cc; --muted: #b0a68c; --rule: #364237;
+  --panel: #212c25; --link: #f0954a; --code-bg: #26322a;
+  --playable: #9fd38a; --ingame: #8cc7d6; --boots: #f0c25e; --early: #c9b48a;
+  --head-bg: #0f1511; --head-fg: #e8c98a; --head-rule: 3px solid #8a5a2b;
+  --display: "Oswald", "Arial Narrow", sans-serif;
+  font-family: "Source Serif 4", Georgia, serif; font-size: 17px;
+  background: radial-gradient(ellipse at top right, #2c3a2a 0%, #18211c 55%, #101611 100%) fixed;
+}
+.theme-uncharted h1 {
+  color: #e8c98a; text-transform: uppercase; letter-spacing: 0.08em;
+  font-size: 2.5rem; text-shadow: 2px 2px 0 rgb(0 0 0 / 0.45);
+}
+.theme-uncharted h2 {
+  border-top: 2px dashed #8a5a2b; color: #e8c98a;
+  text-transform: uppercase; letter-spacing: 0.06em;
+}
+.theme-uncharted .facts { border: 1px solid #8a5a2b; }
