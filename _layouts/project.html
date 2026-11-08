@@ -16,12 +16,12 @@ layout: default
     <dd>{{ page.release }}</dd>
     <dt>Repository</dt>
     <dd>{% if page.repo %}<a href="{{ page.repo }}">{{ page.repo | remove: "https://github.com/" }}</a>{% else %}not public yet{% endif %}</dd>
-    {%- if system.branch %}
+    {%- if system.module %}
     <dt>SwARc</dt>
-    <dd>branch <a href="{{ site.repo }}/tree/{{ system.branch }}"><code>{{ system.branch }}</code></a> (<a href="{{ site.repo }}/commits/{{ system.branch }}">commits</a>)</dd>
+    <dd><a href="{{ site.repo }}/tree/main/{{ system.module }}"><code>{{ system.module }}</code></a> (<a href="{{ site.repo }}/commits/main/{{ system.module }}">commits</a>)</dd>
     {%- endif %}
     <dt>Updated</dt>
-    <dd>{% if page.repo %}{% include updated.html repo=page.repo branch=page.branch %}{% else %}{% include updated.html repo=site.repo branch=system.branch %}{% endif %}</dd>
+    <dd>{% if page.repo %}{% include updated.html repo=page.repo branch=page.branch %}{% else %}{% include updated.html repo=site.repo path=system.module %}{% endif %}</dd>
   </dl>
 
   {{ content }}

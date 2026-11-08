@@ -10,8 +10,8 @@ layout: default
     <ul class="stats">
       <li>{{ page.state }}</li>
       <li>{% if ports.size == 0 %}No ports yet{% elsif ports.size == 1 %}<strong>1</strong> port{% else %}<strong>{{ ports.size }}</strong> ports{% endif %}</li>
-      {%- if page.branch %}
-      <li>branch <a href="{{ site.repo }}/tree/{{ page.branch }}"><code>{{ page.branch }}</code></a></li>
+      {%- if page.module %}
+      <li><a href="{{ site.repo }}/tree/main/{{ page.module }}"><code>{{ page.module }}</code></a></li>
       {%- endif %}
     </ul>
   </header>
@@ -19,12 +19,12 @@ layout: default
   <dl class="facts">
     <dt>Built on</dt>
     <dd>{{ page.base }}</dd>
-    {%- if page.branch %}
+    {%- if page.module %}
     <dt>Progress</dt>
-    <dd>SwARc branch <a href="{{ site.repo }}/tree/{{ page.branch }}"><code>{{ page.branch }}</code></a> (<a href="{{ site.repo }}/commits/{{ page.branch }}">commits</a>), until merged into main</dd>
+    <dd>SwARc <a href="{{ site.repo }}/tree/main/{{ page.module }}"><code>{{ page.module }}</code></a> on main (<a href="{{ site.repo }}/commits/main/{{ page.module }}">commits</a>)</dd>
     {%- endif %}
     <dt>Updated</dt>
-    <dd>{% include updated.html repo=site.repo branch=page.branch %}</dd>
+    <dd>{% include updated.html repo=site.repo path=page.module %}</dd>
   </dl>
 
   {{ content }}
@@ -40,5 +40,5 @@ layout: default
   <p class="empty">No ports yet: the module comes first.</p>
   {%- endif %}
 
-  {% include commits.html repo=site.repo branch=page.branch %}
+  {% include commits.html repo=site.repo path=page.module %}
 </article>

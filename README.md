@@ -8,8 +8,9 @@ GitHub Pages (Jekyll, built by `.github/workflows/pages.yml`) at
 - `index.md`: the landing page; its systems and port list are generated.
 - `_systems/<system>.md`: one page per system (PC, PS4, Switch, Xbox
   360). `order` sets its position in the Systems menu, `accent` its
-  colour on the landing page, `branch` the SwARc branch it is developed
-  on until merged into main.
+  colour on the landing page, `module` its platform module in SwARc
+  (`platforms/<name>`; every module is on main), whose commits are the
+  system's progress log.
 - `_projects/<system>/<port>.md`: one page per port, served at
   `/<system>/<port>/`. The front matter holds the status shown on the
   landing page (`stage` is one of `playable`, `ingame`, `boots`, `early`
@@ -19,8 +20,8 @@ GitHub Pages (Jekyll, built by `.github/workflows/pages.yml`) at
 - "Updated" dates and the recent-commits lists are not kept by hand:
   `.github/scripts/commits.py` writes the latest commits of the port's
   `repo` (on its `branch`, when its work is on one for now), or, for a
-  port without a public one, of SwARc on its system's `branch` (main for
-  PC), to `_data/commits.json` before each build. The workflow builds on
+  port without a public one, of SwARc's main touching its system's
+  `module`, to `_data/commits.json` before each build. The workflow builds on
   every push here and on a `repository_dispatch` `commits` event, which
   SwARc and each port's repository send after a push of their own (with
   a token for this repository in their `SITE_DISPATCH_TOKEN` secret).

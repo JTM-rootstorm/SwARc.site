@@ -9,9 +9,9 @@ state: Ports running
 summary: 32-bit and 64-bit Windows games, on SwARc's Win32 and DirectX/middleware HLE.
 ---
 
-Windows games for x86 and x86-64 PCs, on SwARc's main branch. The x86
-core's lifter translates their code to C++, and the **Win32** platform
-module reads their PE images and reimplements the Windows, DirectX and
+Windows games for x86 and x86-64 PCs, on SwARc's x86 core and Win32
+module (both on by default). The x86 core's lifter translates their code
+to C++, and the **Win32** platform module reads their PE images and reimplements the Windows, DirectX and
 middleware APIs they import: Win32 on POSIX and SDL3, Miles, Bink,
 DirectDraw/Direct3D 7, OpenGL 1.x, Direct3D 9 and D3DX 9, DirectSound,
 DirectInput and XInput, with Direct3D 11 and XAudio2 on the way for x64

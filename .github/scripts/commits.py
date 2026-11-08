@@ -1,10 +1,13 @@
 #!/usr/bin/env python3
 """Write _data/commits.json: the latest five commits of every repository
-(and branch) the site shows an "Updated" date or a commit list for,
-leaving out commits that change only .github/ (CI, not the port).
+(and branch, or path in it) the site shows an "Updated" date or a commit
+list for, leaving out commits that change only .github/ (CI, not the
+port).
 
 Keys are "<owner>/<repo>@<branch>" ("@" alone for the default branch),
-as _includes/updated.html and commits.html look them up. Run before
+with ":<path>" after it for the commits touching a path (a system's
+platform module in SwARc), as _includes/updated.html and commits.html
+look them up. Run before
 `jekyll build`; GITHUB_TOKEN, when set, raises the API's rate limit.
 A repository that cannot be read is left out, and its pages fall back
 to a link to its commits.
@@ -31,17 +34,18 @@ def slug(url):
 site_repo = slug(re.search(
     r"^repo:\s*(\S+)", open(os.path.join(ROOT, "_config.yml")).read(), re.M).group(1))
 keys = {site_repo + "@"}
-branches = {}
+system_keys = {}
 for path in glob.glob(os.path.join(ROOT, "_systems", "*.md")):
     fm = front_matter(path)
-    branches[os.path.basename(path)[:-3]] = fm.get("branch", "")
-    keys.add(site_repo + "@" + fm.get("branch", ""))
+    key = site_repo + "@" + (":" + fm["module"] if fm.get("module") else "")
+    system_keys[os.path.basename(path)[:-3]] = key
+    keys.add(key)
 for path in glob.glob(os.path.join(ROOT, "_projects", "*", "*.md")):
     fm = front_matter(path)
     if "repo" in fm:
         keys.add(slug(fm["repo"]) + "@" + fm.get("branch", ""))
     else:
-        keys.add(site_repo + "@" + branches.get(os.path.basename(os.path.dirname(path)), ""))
+        keys.add(system_keys.get(os.path.basename(os.path.dirname(path)), site_repo + "@"))
 
 headers = {"Accept": "application/vnd.github+json"}
 if os.environ.get("GITHUB_TOKEN"):
@@ -60,10 +64,13 @@ def ci_only(repo, sha):
 
 data = {}
 for key in sorted(keys):
-    repo, branch = key.split("@")
+    repo, rest = key.split("@")
+    branch, _, subpath = rest.partition(":")
     url = f"https://api.github.com/repos/{repo}/commits?per_page=20"
     if branch:
         url += "&sha=" + branch
+    if subpath:
+        url += "&path=" + subpath
     try:
         commits = []
         for c in get(url):

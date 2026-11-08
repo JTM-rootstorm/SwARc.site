@@ -1,9 +1,10 @@
 {%- comment -%}
 The latest commits to include.repo (on include.branch, else its default
-branch), from _data/commits.json; without them, only the link to the
-commits.
+branch; only those touching include.path when given), from
+_data/commits.json; without them, only the link to the commits.
 {%- endcomment -%}
 {%- assign key = include.repo | remove: 'https://github.com/' | append: '@' | append: include.branch -%}
+{%- if include.path %}{% assign key = key | append: ':' | append: include.path %}{% endif -%}
 <section class="recent">
   <h2>Recent commits</h2>
   <ol class="commits">
@@ -11,5 +12,5 @@ commits.
     <li><time>{{ c.date }}</time> <a href="{{ c.url }}">{{ c.message }}</a></li>
   {%- endfor %}
   </ol>
-  <p><a href="{{ include.repo }}/commits{% if include.branch %}/{{ include.branch }}{% endif %}">All commits</a></p>
+  <p><a href="{{ include.repo }}/commits{% if include.branch %}/{{ include.branch }}{% elsif include.path %}/main{% endif %}{% if include.path %}/{{ include.path }}{% endif %}">All commits</a></p>
 </section>

@@ -9,8 +9,8 @@ port_tiles: true
 <section class="hero">
   <h1>SwARc</h1>
   <p class="lede">The Swiss Army Recompiler: static recompilation of PC and
-  console games into native 64-bit programs for Linux and macOS (PC games
-  on main, the consoles on their own branches): the scaffold that gets a
+  console games into native 64-bit programs for Linux and macOS: the
+  scaffold that gets a
   game running natively while its code is replaced, piece by piece, with
   hand-written C++.</p>
   <ul class="stats">
@@ -49,7 +49,7 @@ port builds from your own copy of the game.
   <a class="card system-card" href="{{ s.url | relative_url }}" style="--accent: {{ s.accent }}">
     <h3>{{ s.full }}</h3>
     <p class="game">{{ s.cpu }}</p>
-    <span class="badge badge-system">{{ s.state }}</span>{% if s.branch %} <span class="branch">on branch <code>{{ s.branch }}</code></span>{% endif %}
+    <span class="badge badge-system">{{ s.state }}</span>{% if s.module %} <span class="branch"><code>{{ s.module }}</code></span>{% endif %}
     <p class="summary">{{ s.summary }}</p>
     <p class="summary count">{% if ports.size == 0 %}No ports yet{% elsif ports.size == 1 %}1 port{% else %}{{ ports.size }} ports{% endif %}</p>
   </a>
@@ -62,9 +62,9 @@ Three layers, each building only on those below it: a **base** every
 guest shares, a **CPU core** per guest CPU, and **platform modules** (an
 operating system and its libraries) on a core. A game builds its own
 platform and core and nothing else: a PS4 game pulls in no Windows code,
-a Switch game no x86 code. The layers, the x86 and PowerPC cores and
-Win32 are on main; each console module is on its own branch on top of
-it.
+a Switch game no x86 code. Everything is on SwARc's main branch, each
+core and module behind its own build option; the console modules are in
+progress and off by default.
 
 - **Base**: the host layer (SDL3 windows, input and audio output, ffmpeg,
   a graphics device on Vulkan and native Metal with its shader
@@ -81,8 +81,7 @@ it.
   - **PowerPC** (`recomp_lift_ppc`): 64-bit PowerPC in 32-bit mode,
     exact floating point, VMX and the Xenon's VMX128; tested against
     QEMU's PowerPC 970.
-  - **AArch64** (`recomp_lift_a64`, branch
-    [`horizon`]({{ site.repo }}/tree/horizon)): integer, flags and the
+  - **AArch64** (`recomp_lift_a64`): integer, flags and the
     exclusive monitor so far; tested against Unicorn and, on arm64
     hosts, the CPU itself.
 - **Platform modules**, each reading its own executable formats and
@@ -92,11 +91,11 @@ it.
     DirectDraw/Direct3D 7, OpenGL 1.x, Direct3D 9 and D3DX 9 (HLSL and
     compiled shaders to GLSL), DirectSound 8, DirectInput 8 and XInput.
   - **Orbis** for the [PlayStation 4]({{ '/ps4/' | relative_url }}), on
-    the x86-64 core (branch [`ps4`]({{ site.repo }}/tree/ps4)).
+    the x86-64 core ([`platforms/orbis`]({{ site.repo }}/tree/main/platforms/orbis)).
   - **Xbox 360** for the [Xbox 360]({{ '/x360/' | relative_url }}), on
-    the PowerPC core (branch [`x360`]({{ site.repo }}/tree/x360)).
+    the PowerPC core ([`platforms/xbox360`]({{ site.repo }}/tree/main/platforms/xbox360)).
   - **Horizon** for the [Switch]({{ '/switch/' | relative_url }}), on
-    the AArch64 core (branch [`horizon`]({{ site.repo }}/tree/horizon)).
+    the AArch64 core ([`platforms/horizon`]({{ site.repo }}/tree/main/platforms/horizon)).
 
 The lifted code is an exact oracle, not the end product: each port
 replaces lifted functions with native C++ one subsystem at a time,

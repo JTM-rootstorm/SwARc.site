@@ -5,7 +5,7 @@ order: 3
 accent: "#e03131"
 cpu: AArch64 (ARM Cortex-A57)
 base: SwARc Horizon platform module, on an AArch64 core
-branch: horizon
+module: platforms/horizon
 state: Groundwork
 summary: An AArch64 core beside the x86 and PowerPC ones, and the Horizon module on it. Lifts and runs a homebrew NRO checked against Unicorn; no ports yet.
 ---
@@ -19,10 +19,10 @@ that core as Orbis sits on the x86-64 one, and shares the same base
 (SDL3, ffmpeg, the graphics device, the mixer). A Switch game builds
 without the x86 core or Win32 at all.
 
-The module is developed on SwARc's
-[`{{ page.branch }}` branch]({{ site.repo }}/tree/{{ page.branch }})
-until it is merged into main; its
-[commits]({{ site.repo }}/commits/{{ page.branch }}) are the progress
+The module is on SwARc's main branch, in
+[`{{ page.module }}`]({{ site.repo }}/tree/main/{{ page.module }}), off by
+default until it is done; its
+[commits]({{ site.repo }}/commits/main/{{ page.module }}) are the progress
 log.
 
 Status: milestone 1. NRO loading and relocation, the guest address
