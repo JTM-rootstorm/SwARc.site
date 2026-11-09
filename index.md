@@ -59,38 +59,29 @@ port builds from your own copy of the game.
 ## What SwARc provides
 
 Three layers, each building only on those below it: a **base** every
-guest shares, a **CPU core** per guest CPU, and **platform modules** (an
-operating system and its libraries) on a core. A game builds its own
-platform and core and nothing else: a PS4 game pulls in no Windows code,
-a Switch game no x86 code. Everything is on SwARc's main branch, each
-core and module behind its own build option; the console modules are in
-progress and off by default.
+guest shares, a **CPU core** per guest CPU, and **platform modules**
+(an operating system and its libraries) on a core. A game builds its
+own core and platform and nothing else: a PS4 game pulls in no Windows
+code, a Switch game no x86 code. All of it is on SwARc's main branch,
+each core and module behind its own build option.
 
-- **Base**: the host layer (SDL3 windows, input and audio output, ffmpeg,
-  a graphics device on Vulkan and native Metal with its shader
-  compilers, a software mixer with EAX 1-3 reverb), the guest address
-  space, frame pacing, and Berkeley SoftFloat under every core's
-  floating point.
-- **CPU cores**, each a lifter that emits C++ for every function of a
-  game's executables with exact semantics, the CPU model that code runs
-  on, and tests against an oracle:
-  - **x86 and x86-64** (`recomp_lift`): integer, exact 80-bit x87, SSE
-    to SSE4.2 and AVX with MXCSR, against a fixed CPU model (AMD family
-    16h) that grows only as each feature lifts bit-exactly; tested
-    against the host CPU.
-  - **PowerPC** (`recomp_lift_ppc`): 64-bit PowerPC in 32-bit mode,
-    exact floating point, VMX and the Xenon's VMX128; tested against
-    QEMU's PowerPC 970.
-  - **AArch64** (`recomp_lift_a64`): integer, flags and the
-    exclusive monitor so far; tested against Unicorn and, on arm64
-    hosts, the CPU itself.
-- **Platform modules**, each reading its own executable formats and
-  reimplementing its system libraries (HLE):
-  - **Win32** for [PC]({{ '/pc/' | relative_url }}) games, on the x86
-    core ([`platforms/win32`]({{ site.repo }}/tree/main/platforms/win32)): PE images, the Win32 process and SEH, Win32 on
-    POSIX, the UCRT and MSVCP140, Miles Sound System, Bink,
-    DirectDraw/Direct3D 7, OpenGL 1.x, Direct3D 9 and D3DX 9 (HLSL and
-    compiled shaders to GLSL), DirectSound 8, DirectInput 8 and XInput.
+- **Base**: SDL3 windows, input and audio output, ffmpeg, a graphics
+  device on Vulkan and native Metal, a software mixer with EAX 1-3
+  reverb, the guest address space, frame pacing, and Berkeley SoftFloat
+  under every core's floating point.
+- **CPU cores**: a lifter that emits C++ for every function of a game's
+  executables with exact semantics, the CPU model that code runs on, and
+  tests against an oracle.
+  - **x86 and x86-64**: integer, exact 80-bit x87, SSE to SSE4.2 (AVX
+    in progress), checked against the host CPU.
+  - **PowerPC**: 64-bit PowerPC in 32-bit mode, exact floating point,
+    VMX and the Xenon's VMX128, checked against QEMU's PowerPC 970.
+  - **AArch64**: integer, flags and the exclusive monitor so far,
+    checked against Unicorn and, on arm64 hosts, the CPU.
+- **Platform modules**: the system's executable formats and its system
+  libraries, reimplemented (HLE).
+  - **Win32** for the [PC]({{ '/pc/' | relative_url }}), on the x86
+    core ([`platforms/win32`]({{ site.repo }}/tree/main/platforms/win32)).
   - **Orbis** for the [PlayStation 4]({{ '/ps4/' | relative_url }}), on
     the x86-64 core ([`platforms/orbis`]({{ site.repo }}/tree/main/platforms/orbis)).
   - **Xbox 360** for the [Xbox 360]({{ '/x360/' | relative_url }}), on
