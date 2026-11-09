@@ -72,8 +72,8 @@ each core and module behind its own build option.
 - **CPU cores**: a lifter that emits C++ for every function of a game's
   executables with exact semantics, the CPU model that code runs on, and
   tests against an oracle.
-  - **x86 and x86-64**: integer, exact 80-bit x87, SSE to SSE4.2 (AVX
-    in progress), checked against the host CPU.
+  - **x86 and x86-64**: integer, exact 80-bit x87, SSE to SSE4.2 and
+    AVX, checked against the host CPU.
   - **PowerPC**: 64-bit PowerPC in 32-bit mode, exact floating point,
     VMX and the Xenon's VMX128, checked against QEMU's PowerPC 970.
   - **AArch64**: integer, flags and the exclusive monitor so far,
