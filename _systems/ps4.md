@@ -7,7 +7,7 @@ cpu: x86-64 (AMD Jaguar, family 16h)
 base: SwARc Orbis platform module
 module: platforms/orbis
 state: Module in progress
-summary: The first console module, on SwARc's x86-64 core. The PS4's CPU is x86-64, so it reuses the PC games' lifter and adds a platform (executable format, system libraries, GPU), without any Windows code.
+summary: PlayStation 4 games, on the x86-64 core and the Orbis module.
 ---
 
 The PS4 runs x86-64 code on an AMD Jaguar CPU, which SwARc's x64

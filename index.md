@@ -86,7 +86,8 @@ progress and off by default.
     hosts, the CPU itself.
 - **Platform modules**, each reading its own executable formats and
   reimplementing its system libraries (HLE):
-  - **Win32** (PC games): PE images, the Win32 process and SEH, Win32 on
+  - **Win32** for [PC]({{ '/pc/' | relative_url }}) games, on the x86
+    core ([`platforms/win32`]({{ site.repo }}/tree/main/platforms/win32)): PE images, the Win32 process and SEH, Win32 on
     POSIX, the UCRT and MSVCP140, Miles Sound System, Bink,
     DirectDraw/Direct3D 7, OpenGL 1.x, Direct3D 9 and D3DX 9 (HLSL and
     compiled shaders to GLSL), DirectSound 8, DirectInput 8 and XInput.

@@ -7,7 +7,7 @@ cpu: AArch64 (ARM Cortex-A57)
 base: SwARc Horizon platform module, on an AArch64 core
 module: platforms/horizon
 state: Groundwork
-summary: An AArch64 core beside the x86 and PowerPC ones, and the Horizon module on it. Lifts and runs a homebrew NRO checked against Unicorn; no ports yet.
+summary: Nintendo Switch games, on the AArch64 core and the Horizon module.
 ---
 
 The Switch's CPU is AArch64, so SwARc has a CPU core for it beside the

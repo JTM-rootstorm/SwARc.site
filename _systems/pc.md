@@ -5,8 +5,9 @@ order: 1
 accent: "#1c7ed6"
 cpu: x86 (32-bit) and x86-64
 base: SwARc x86 core and Win32 platform module
+module: platforms/win32
 state: Ports running
-summary: 32-bit and 64-bit Windows games, on SwARc's Win32 and DirectX/middleware HLE.
+summary: Windows games for 32-bit and 64-bit x86 PCs, on the x86 core and the Win32 module.
 ---
 
 Windows games for x86 and x86-64 PCs, on SwARc's x86 core and Win32
@@ -16,6 +17,11 @@ middleware APIs they import: Win32 on POSIX and SDL3, Miles, Bink,
 DirectDraw/Direct3D 7, OpenGL 1.x, Direct3D 9 and D3DX 9, DirectSound,
 DirectInput and XInput, with Direct3D 11 and XAudio2 on the way for x64
 games. Graphics run on SDL_GPU: Vulkan on Linux, native Metal on macOS.
+
+The module is on SwARc's main branch, in
+[`{{ page.module }}`]({{ site.repo }}/tree/main/{{ page.module }}); its
+[commits]({{ site.repo }}/commits/main/{{ page.module }}) are the progress
+log.
 
 32-bit games run in a 4 GiB guest address space with the stdcall/cdecl
 HLE ABI; x64 games use the Win64 ABI, the UCRT and MSVCP140, and AVX.
