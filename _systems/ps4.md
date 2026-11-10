@@ -32,22 +32,27 @@ log.
   beside the host loop. A lift script lifts every shipped PRX.
 - **System library HLE** by NID, on the core's System V x64 ABI:
   libkernel (memory, pthreads, files, event queues), libSceLibcInternal,
-  the system and user services, VideoOut, GnmDriver and the GPU's
-  command processor, AudioOut on the software mixer, AvPlayer on ffmpeg,
-  the NGS2 sound engine and the Ajm audio decoders (ATRAC9 and MP3 on
-  ffmpeg), SaveData, networking and PSN (signed out), fibers, fonts on
-  FreeType, Rtc, AppContent, the pad and trophies. The save data and
-  message dialogs are drawn by the runtime over the game's frames.
+  the system and user services, VideoOut (both flip modes, timed against
+  the console), GnmDriver and the GPU's command processor, AudioOut on
+  the software mixer, AvPlayer on ffmpeg, the hardware video decoder
+  (Videodec2), the NGS2 sound engine and the Ajm audio decoders (ATRAC9
+  on LibAtrac9, MP3 on ffmpeg), SaveData, networking and PSN (signed
+  out), fibers, fonts on FreeType, Rtc, AppContent, the pad and trophies
+  with their unlock state. The save data dialog (its list, new items and
+  progress bar) and the message dialog are drawn by the runtime over the
+  game's frames.
 - **GPU front end** on SwARc's graphics device: draws and compute
   dispatches, every GCN shader stage including geometry shaders (run as
   compute passes), textures in the console's tile modes, depth targets
   as 2D arrays with HTILE fast clears and their stencil sampled as a
   texture, compute image stores, texture levels, slices and cube maps,
-  indirect and rectangle draws. Work on the cost per draw took the
-  busiest scene so far from about 5 to about 160 fps.
+  indirect and rectangle draws, GDS and wave-wide operations, 16-bit
+  float buffer stores and SGPRs spilled to vector lanes. Work on the
+  cost per draw took the busiest scene so far from about 5 to about 160
+  fps.
 - **Next**: the GPU thread's frame time.
 
-Core lifter work it brought: CMPXCHG16B, FXSAVE/FXRSTOR, 256-bit
+Core lifter work it brought: CMPXCHG16B, F16C, FXSAVE/FXRSTOR, 256-bit
 conversions, `jrcxz`, locked `xchg`, the System V x64 ABI, `setjmp` and
 `longjmp` in x64 images, SSE flush-to-zero, and polling loops loaded
 with acquire atomics so the compiler cannot drop them.

@@ -23,6 +23,15 @@ The module is on SwARc's main branch, in
 [commits]({{ site.repo }}/commits/main/{{ page.module }}) are the progress
 log.
 
+It also carries the first native code shared between ports: the Visual
+C++ 6 runtime that games link statically (string and memory functions,
+64-bit helpers, number parsing and formatting, the `sprintf` and
+`sscanf` engines, math intrinsics), reimplemented to match VC6 bit for
+bit. A port binds its EXE's copies to it, and an oracle test checks each
+function against the lifted original. On the graphics device, every
+fixed-function draw carries its whole state, so a port's native
+renderer can draw on the device directly, as CoD1's back end does.
+
 32-bit games run in a 4 GiB guest address space with the stdcall/cdecl
 HLE ABI; x64 games use the Win64 ABI, the UCRT and MSVCP140, and AVX.
 

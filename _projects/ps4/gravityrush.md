@@ -16,7 +16,7 @@ repo: https://github.com/JTM-rootstorm/GravityRush-Reshifted
 ---
 
 The first game on SwARc's PS4 platform module, Orbis, and the test
-case it is being built against. It tracks the module's `ps4` branch.
+case it is being built against. It builds against SwARc's main branch.
 
 ## Status
 
@@ -65,6 +65,9 @@ addresses.
 - Episode worlds cannot be booted directly (`-world`); they draw black
   without what the title's New Game sets up.
 - The GPU thread limits the frame rate in the zoom.
+- Where Continue puts Kat, the city draws no shadows. The area's own
+  lighting turns them off there, so it looks like the game rather than
+  the platform; that is still to be confirmed on the console.
 
 ## Next
 

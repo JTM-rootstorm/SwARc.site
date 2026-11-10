@@ -12,6 +12,7 @@ summary: Single player plays from a new game to Wesrin Cross, with sound, music,
 platforms: Linux x86-64; macOS on Apple Silicon (in game, scripted runs)
 release: GOG, version 1.11.1
 repo: https://github.com/JTM-rootstorm/DS1-Rebuilt
+branch: view-distance
 ---
 
 The project SwARc grew out of: the lifter, x87 model, runtime and
@@ -55,9 +56,19 @@ cursor) but not yet played by hand.
   1024x768 to the desktop size and 16:9 modes up to 3840x2160 (listed in
   the Video tab; choosing one there not yet tried).
 - **Hor+ field of view**: wide screens keep 4:3's vertical view and see
-  more at the sides, with nothing culled at the edges.
+  more at the sides, with nothing culled at the edges. On the
+  [`view-distance`]({{ page.repo }}/tree/view-distance) branch, the
+  world's frustum widens with it, so terrain and objects load as far out
+  at the sides as they did at 4:3.
 - **UI scale**: the HUD and windows keep their 1024x768 proportions at
   any height, the compass and the cursor with them.
+- **The C runtime**, on the same branch: the EXE's statically linked
+  Visual C++ 6 runtime (string and memory functions, 64-bit helpers,
+  number parsing and formatting, the `sprintf` and `sscanf` engines,
+  math intrinsics) runs on SwARc's native copy, each function checked
+  against the lifted original on random arguments. STL code is named
+  for reading (every `std::map` and `std::set`, vector, list, deque and
+  string), each name with its evidence.
 - **Software cursor on the GPU**: the cursor is blended on the GPU with
   an asynchronous readback, which took a 5K display from ~50 to a steady
   60 fps with the window focused.

@@ -8,7 +8,7 @@ fonts: "family=Fredoka:wght@400;600;700"
 order: 3
 stage: ingame
 status: In game
-summary: Menus, the cantina and several levels load and play, with keyboard and Xbox pad. Hitches on new effects; past the first chapter untested. The first Direct3D 9 user.
+summary: Menus, the cantina and several levels load and play, with keyboard and Xbox pad, paced at the display's refresh rate. Past the first chapter untested. The first Direct3D 9 user.
 platforms: Linux x86-64; macOS on Apple Silicon (in game, scripted runs)
 release: Steam (app 32440)
 repo: https://github.com/JTM-rootstorm/LSWTCS_Rebricked
@@ -28,7 +28,7 @@ natively on Linux. Verified:
 - the legal screens, the attract movie (Bink) and the title screen;
 - the menus, and New Game into the Mos Eisley cantina;
 - Negotiations played by hand from the cantina through its chapter and
-  cutscenes to the end tally;
+  cutscenes, its end tally (True Jedi) and on;
 - with the `LSWTCS_LEVEL` test hook, which makes New Game start any
   level, the pod race, the Episode III space battle, Tatooine and the
   Hoth snowspeeders load and play (walking, jumping, lightsaber, the
@@ -37,7 +37,7 @@ natively on Linux. Verified:
   precompiled ones;
 - keyboard through DirectInput and an Xbox Series X pad through XInput.
 
-Not yet seen: the minikit build and status screen after a tally,
+Not yet tested: the minikit build and status screen after a tally,
 returning to the cantina, saving and loading, chapters past
 Negotiations, the ending.
 
@@ -54,28 +54,33 @@ moved there. Bringing it up on Metal fixed four things in SwARc: the
 window title (Windows-1252 text), the hidden fullscreen window, rendering
 to mip levels, and sampler LOD bias, which Metal lacks (the shadows).
 
+## Frame rate
+
+The original caps itself at about 85 fps, and accepts only display
+modes up to 85 Hz, so faster displays get the cap on Windows too. The
+port paces it by the host's refresh rate instead: a 120 Hz display gets
+a steady 120 fps.
+
 ## Known issues
 
-- **Hitches on new effects.** The first time a level meets a new
-  material or effect (entering a level, the first minikit) the game
-  stalls while its graphics pipelines are built: 60-90 ms each, up to
-  about a second at a time. They are not cached between runs.
-- **The Negotiations tally crashed** just after "True Jedi" on an
-  indirect jump the lifter had not recovered. The lifter now recovers
-  it, but the tally has not been replayed since.
+- **Hitches on first play.** The first time a level meets a new
+  material or effect, the game stalls while its graphics pipelines are
+  built: 25-80 ms each, about 2 s in all on the way into
+  Negotiations. The driver caches them, so later plays are smooth.
 - Two C runtime jump tables are still dispatched dynamically; neither
   has been reached.
-- In-level sound and music have not been checked by ear.
+- In-level sound and music have not been checked by ear, nor game speed
+  above 120 fps.
 
 ## Next
 
-1. Fix the pipeline stalls: build pipelines off the render thread, or
-   cache and replay them at startup.
-2. Play on past the Negotiations tally: the minikit build, the status
+1. Play on past the Negotiations tally: the minikit build, the status
    screen, back to the cantina, saving and loading, the next chapters.
-3. More shaders as levels reach more materials.
-4. The enhancements: arbitrary aspect ratios, an uncapped frame rate,
-   the resolution list.
+2. More shaders as levels reach more materials.
+3. The other enhancements: arbitrary aspect ratios and the resolution
+   list.
+4. First-play hitches, if they matter: pipelines built on worker
+   threads, or smaller shaders.
 
 The project's [FINDINGS.md]({{ page.repo }}/blob/main/FINDINGS.md)
 tracks progress and [ARCHITECTURE.md]({{ page.repo }}/blob/main/ARCHITECTURE.md)

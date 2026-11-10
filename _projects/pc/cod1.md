@@ -8,11 +8,10 @@ fonts: "family=Stardos+Stencil:wght@400;700&family=Special+Elite"
 order: 2
 stage: ingame
 status: In game
-summary: The training level plays through to completion. Widescreen, Hor+ FOV, a scaled HUD and exact frame caps are in; hot engine code and the renderer's back end are going native.
+summary: The training level plays through to completion. Widescreen, Hor+ FOV, a scaled HUD and exact frame caps are in; the renderer's back end is native and draws on SwARc's graphics device.
 platforms: Linux x86-64; macOS on Apple Silicon (training played by hand)
 release: Steam (app 2620), v1.5b, single player
 repo: https://github.com/JTM-rootstorm/CoD1-Reissued
-branch: render-backend
 ---
 
 A native port of Call of Duty's single player. Goals beyond running
@@ -56,19 +55,15 @@ lifted original by the project's tests.
 - **Renderer hot path**: culling, sky clipping, texture coordinate
   generation and the draw surface sort; lifted renderer code on the main
   thread went from 12.9% to 4.5%.
-- **Renderer back end**, native down to its GL calls: the GL state, a
-  stage's texture units, a flush's fog, deforms and colours, the stage
-  loop and every stage iterator, and the dlight pass, checked with every
-  GL call recorded. On the
-  [`render-backend`]({{ page.repo }}/tree/render-backend) branch, until
-  it is merged, also the shadow volumes and their silhouette, the colour
-  and alpha generators, the vertex deforms, the texture coordinate
-  generators and modifiers, and the static model surfaces: each checked
-  against the lifted original over 200,000 random cases, and against
-  planted bugs the tests must catch. The training level reaches only
-  some of these (no dlight pass, deforms or most texture coordinate
-  generators, nor the iterators for GL extensions the OpenGL HLE does
-  not offer); only the tests cover the rest.
+- **Renderer back end**, all of it: the GL state, the stages and every
+  stage iterator, the dlight and shadow passes, the vertex deforms, the
+  colour, alpha and texture coordinate generators, every surface type,
+  the sky, flares, portals, the 2D commands and the command loop. Its GL
+  calls go straight to SwARc's GL state, and its vertex array draws to
+  the graphics device, no longer through the reimplemented `opengl32`.
+  Each piece is also checked against the lifted original over 200,000
+  random cases and against planted bugs the tests must catch, which
+  covers the paths the training level never reaches.
 - **XAnim** evaluation and updates.
 - **Files**: the pk3 directory scan, zlib and the JPEG inverse DCT on
   the host.
@@ -76,9 +71,9 @@ lifted original by the project's tests.
 
 ## Next
 
-A renderer that drives SwARc's graphics device directly: with the back
-end native down to its GL calls, those calls can go to the device
-instead of through the OpenGL HLE.
+The renderer's front end, natively from the bottom up: the view and its
+projection, the draw surface list, the world's cells and static models,
+the cell walk through portals, and the scene's entities and polygons.
 
 The project's [FINDINGS.md]({{ page.repo }}/blob/main/FINDINGS.md)
 tracks progress and [ARCHITECTURE.md]({{ page.repo }}/blob/main/ARCHITECTURE.md)

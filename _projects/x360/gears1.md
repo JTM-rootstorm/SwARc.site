@@ -35,9 +35,11 @@ as the module matures. Nothing draws there yet.
     flicker-free blood pools and decals, merged into Xenia Canary
     ([#1289](https://github.com/xenia-canary/xenia-canary/pull/1289)).
 - A **native renderer** has begun, replacing the emulated GPU at the
-  game's own Direct3D level: the game's shaders translated ahead of
-  time from its packages, its textures with every mip level, and its
-  vertex and index buffers, re-read only when the game writes them.
+  game's own Direct3D level, in a window of its own beside the emulated
+  one: the game's shaders translated ahead of time from its packages,
+  its textures with every mip level, its vertex and index buffers
+  (re-read only when the game writes them), and its render targets with
+  their clears and resolves. Every kind of draw is captured.
 
 ## Known issues
 
@@ -46,7 +48,8 @@ as the module matures. Nothing draws there yet.
 
 ## Next
 
-- The native renderer drawing frames on its own.
+- The native renderer drawing frames on its own: its shaders and state
+  next.
 - Native seams for the rest of the system layer (input, audio, files,
   threads), so ReXGlue becomes a scaffold.
 - The move onto SwARc's Xbox 360 module; later macOS on arm64.
